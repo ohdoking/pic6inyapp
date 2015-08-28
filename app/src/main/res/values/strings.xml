@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PicProject</string>
+    <string name="title_activity_dialog_main">DialogMainActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 </resources>
