@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import com.yapp.pic6.picproject.dao.Gallery;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,13 +16,11 @@ import java.util.HashMap;
 public class DBHelper extends SQLiteOpenHelper {
 
    public static final String DATABASE_NAME = "PIC.db";
-   public static final String CONTACTS_TABLE_NAME = "contacts";
-   public static final String CONTACTS_COLUMN_ID = "id";
-   public static final String CONTACTS_COLUMN_NAME = "name";
-   public static final String CONTACTS_COLUMN_EMAIL = "email";
-   public static final String CONTACTS_COLUMN_STREET = "street";
-   public static final String CONTACTS_COLUMN_CITY = "place";
-   public static final String CONTACTS_COLUMN_PHONE = "phone";
+   public static final String GALLERYS_TABLE_NAME = "gallerys";
+   public static final String GALLERYS_COLUMN_ID = "id";
+   public static final String GALLERYS_COLUMN_NAME = "name";
+   public static final String GALLERYS_COLUMN_ORDER = "gorder";
+
    private HashMap hp;
 
    public DBHelper(Context context)
@@ -31,75 +32,76 @@ public class DBHelper extends SQLiteOpenHelper {
    public void onCreate(SQLiteDatabase db) {
       // TODO Auto-generated method stub
       db.execSQL(
-      "create table contacts " +
-      "(id integer primary key, name text,phone text,email text, street text,place text)"
+      "create table " + GALLERYS_TABLE_NAME +
+      "(id integer primary key, name text,gorder text)"
       );
    }
 
    @Override
    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
       // TODO Auto-generated method stub
-      db.execSQL("DROP TABLE IF EXISTS contacts");
+      db.execSQL("DROP TABLE IF EXISTS "+ GALLERYS_TABLE_NAME);
       onCreate(db);
    }
 
-   public boolean insertContact  (String name, String phone, String email, String street,String place)
+   public boolean insertGallery (String name, String order)
    {
       SQLiteDatabase db = this.getWritableDatabase();
       ContentValues contentValues = new ContentValues();
       contentValues.put("name", name);
-      contentValues.put("phone", phone);
-      contentValues.put("email", email);	
-      contentValues.put("street", street);
-      contentValues.put("place", place);
-      db.insert("contacts", null, contentValues);
+      contentValues.put("gorder", order);
+
+      db.insert(GALLERYS_TABLE_NAME, null, contentValues);
       return true;
    }
    
    public Cursor getData(int id){
       SQLiteDatabase db = this.getReadableDatabase();
-      Cursor res =  db.rawQuery( "select * from contacts where id="+id+"", null );
+      Cursor res =  db.rawQuery( "select * from " + GALLERYS_TABLE_NAME + " where id="+id+"", null );
       return res;
    }
    
    public int numberOfRows(){
       SQLiteDatabase db = this.getReadableDatabase();
-      int numRows = (int) DatabaseUtils.queryNumEntries(db, CONTACTS_TABLE_NAME);
+      int numRows = (int) DatabaseUtils.queryNumEntries(db, GALLERYS_TABLE_NAME);
       return numRows;
    }
    
-   public boolean updateContact (Integer id, String name, String phone, String email, String street,String place)
+   public boolean updateGallery (Integer id, String name, String order)
    {
       SQLiteDatabase db = this.getWritableDatabase();
       ContentValues contentValues = new ContentValues();
       contentValues.put("name", name);
-      contentValues.put("phone", phone);
-      contentValues.put("email", email);
-      contentValues.put("street", street);
-      contentValues.put("place", place);
-      db.update("contacts", contentValues, "id = ? ", new String[] { Integer.toString(id) } );
+      contentValues.put("gorder", order);
+      db.update(GALLERYS_TABLE_NAME, contentValues, "id = ? ", new String[] { Integer.toString(id) } );
       return true;
    }
 
-   public Integer deleteContact (Integer id)
+   public Integer deleteGallery (Integer id)
    {
       SQLiteDatabase db = this.getWritableDatabase();
-      return db.delete("contacts", 
+      return db.delete(GALLERYS_TABLE_NAME,
       "id = ? ", 
       new String[] { Integer.toString(id) });
    }
    
-   public ArrayList<String> getAllCotacts()
+   public ArrayList<Gallery> getAllGallerys()
    {
-      ArrayList<String> array_list = new ArrayList<String>();
+      ArrayList<Gallery> array_list = new ArrayList<Gallery>();
       
       //hp = new HashMap();
       SQLiteDatabase db = this.getReadableDatabase();
-      Cursor res =  db.rawQuery( "select * from contacts", null );
+      Cursor res =  db.rawQuery( "select * from " + GALLERYS_TABLE_NAME, null );
       res.moveToFirst();
       
       while(res.isAfterLast() == false){
-         array_list.add(res.getString(res.getColumnIndex(CONTACTS_COLUMN_NAME)));
+
+         Gallery gallery = new Gallery();
+         gallery.setId(res.getInt(0));
+         gallery.setName(res.getString(1));
+         gallery.setOrder(res.getString(2));
+         Log.v("out-data", String.valueOf(res.getInt(0)) + "//" + res.getString(1) +"//"+ res.getString(2));
+         array_list.add(gallery);
          res.moveToNext();
       }
    return array_list;
