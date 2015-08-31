@@ -28,7 +28,6 @@ public class AddActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-
                 dbHelper.insertGallery(galleryName.getText().toString(), galleryOrder.getText().toString());
                 finish();
 

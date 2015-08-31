@@ -1,146 +1,114 @@
 package com.yapp.pic6.picproject;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v4.view.ViewPager;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.yapp.pic6.picproject.db.DBHelper;
-import com.yapp.pic6.picproject.service.GalleryHelper;
+import com.yapp.pic6.picproject.adapter.GridPagerAdapter;
+import com.yapp.pic6.picproject.adapter.ImageAdapter;
 
 
 public class DialogMainActivity extends Activity {
 
-    private static final int SELECT_IMAGE = 1;
 
-    private DBHelper mydb;
-    private GalleryHelper gh;
+    //DisplayMetrics mMetrics;
+    private final long FINSH_INTERVAL_TIME = 3000;
+    private long backPressedTime = 0;
+
+    // public PagerIndicator mIndicator;
+    // public PagerIndicator mIndicator;
+    private ViewPager viewPager;
+    private ViewPager gridPager;
+
+
+    private ImageView settingBtn;
+    private ImageView closeBtn;
 
 
 
-    public TextView dbNameCount;
-    public TextView GalleryCount;
-    public Button moveBtn;
-    public Button galleryBtn;
-    public ImageView imageView;
+    //ArrayList<Gallery> listData= new ArrayList<>();
 
-    public ContentResolver cr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dialog_main);
-        /*imageView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
 
-            }
-        });*/
-        mydb = new DBHelper(this);
-        gh = new GalleryHelper(this);
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        gridPager = (ViewPager) findViewById(R.id.grid_pager);
 
-        dbNameCount = (TextView) findViewById(R.id.galleryCount);
-        GalleryCount = (TextView) findViewById(R.id.realGalleryCount);
-        moveBtn = (Button) findViewById(R.id.moveBtn);
-        galleryBtn = (Button) findViewById(R.id.openGalery);
-        imageView = (ImageView) findViewById(R.id.image);
+        viewPager.setAdapter(new ImageAdapter(this)); // 위
+        gridPager.setAdapter(new GridPagerAdapter(this)); // 아래
 
+        settingBtn = (ImageView)findViewById(R.id.setting_btn);
+        closeBtn = (ImageView)findViewById(R.id.x_btn);
 
-        Integer size = mydb.getAllGallerys().size();
-        dbNameCount.setText(String.valueOf(size));
-
-        moveBtn.setOnClickListener(new View.OnClickListener() {
+        settingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent i = new Intent(DialogMainActivity.this, AddActivity.class);
-                startActivity(i);*/
-
-                PackageManager pm = getApplicationContext().getPackageManager();
-
-                if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "NO!!", Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER, 0, 0);
-                    toast.show();
-                }
+                Intent i = new Intent(DialogMainActivity.this,PicSettingsActivity.class);
+                startActivity(i);
             }
         });
 
-        galleryBtn.setOnClickListener(new View.OnClickListener() {
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                savePreferences(position);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent gallery = new Intent(
-                        Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                startActivityForResult(gallery, SELECT_IMAGE);
+                finish();
             }
         });
 
-        gh.getGallery();
-
-
 
 
     }
 
-
-
-
     @Override
-    protected void onResume() {
-        super.onResume();
-        Integer size = mydb.getAllGallerys().size();
-        dbNameCount.setText(String.valueOf(size));
-//        newPicture();
-
+    public boolean onTouchEvent(MotionEvent event) {
+        return false;
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public void onBackPressed() {
+        long tempTime = System.currentTimeMillis();
+        long intervalTime = tempTime - backPressedTime;
 
-        if (resultCode == RESULT_OK && requestCode == SELECT_IMAGE) {
-            Uri selectedImage = data.getData();
-            String path = gh.getPath(selectedImage);
-
-            Bitmap bitmapImage = BitmapFactory.decodeFile(path);
-            ImageView image = (ImageView) findViewById(R.id.image);
-            image.setImageBitmap(bitmapImage);
-
+        if (0 <= intervalTime && FINSH_INTERVAL_TIME >= intervalTime) {
+            super.onBackPressed();
+        } else {
+            backPressedTime = tempTime;
+            String str = getResources().getString(R.string.close_order);
+            Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_dialog_main, menu);
-        return true;
+    // 값 저장하기
+    private void savePreferences(Integer value){
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putInt("where", value);
+        editor.commit();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

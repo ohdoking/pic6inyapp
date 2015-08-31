@@ -1,8 +1,22 @@
 <resources>
     <string name="app_name">PicProject</string>
+    <string name="title_activity_dialog_test">DialogMainActivity</string>
     <string name="title_activity_dialog_main">DialogMainActivity</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_add">AddActivity</string>
+    <string name="title_activity_grid_acitivy">GridAcitivy</string>
+    <string name="title_activity_setting_pic">SettingPicActivity</string>
+    <string name="title_activity_tutorial">TutorialActivity</string>
+    <string name="title_activity_developer_info">DeveloperInfoActivity</string>
+    <string name="new_album">새앨범 추가</string>
+    <string name="new_album_hint">앨범 이름을 입력하세요.</string>
+    <string name="ok">확인</string>
+    <string name="cancel">취소</string>
+    <string name="create_folder_content"> 폴더가 생성 되었습니다.</string>
+    <string name="already_exist">이미 해당 이름의 폴더가 존재합니다.</string>
+    <string name="close_order">한 번 더 누르시면 종료</string>
+    <string name="trash">휴지통</string>
+    <string name="newfolder">앨범 추가</string>
 </resources>

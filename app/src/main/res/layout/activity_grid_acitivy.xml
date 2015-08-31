@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <RelativeLayout
+        android:id="@+id/gallery_paging"
+        android:layout_width="fill_parent"
+        android:layout_height="180dp">
+
+        <com.yapp.pic6.picproject.adapter.ExtendedGallery
+            android:id="@+id/mygallery01"
+            android:layout_width="fill_parent"
+            android:layout_height="180dp"
+            android:fadingEdge="none"
+            android:spacing="0px" />
+
+        <LinearLayout
+            android:id="@+id/image_count"
+            android:background="#00000000"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"></LinearLayout>
+
+    </RelativeLayout>
+
+    <GridView
+        android:id="@+id/iconic_grid"
+        android:layout_width="fill_parent"
+        android:layout_height="185dip"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/gallery_paging"
+        android:layout_marginBottom="30dip"
+        android:layout_weight="1.0"
+        android:columnWidth="10dp"
+        android:horizontalSpacing="30dp"
+        android:numColumns="3"
+        android:padding="10dp"
+        android:stretchMode="columnWidth"
+        android:tag="temp"
+        android:verticalSpacing="10dp" />
+
+    <RelativeLayout
+        android:id="@+id/power_text_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/power_text"
+            android:layout_width="125dp"
+            android:layout_height="30dip"
+            android:gravity="center_vertical|right"
+            ></TextView>
+
+        <TextView
+            android:id="@+id/power_ever_text"
+            android:layout_width="125dp"
+            android:layout_height="30dip"
+            android:layout_toRightOf="@+id/power_text"
+            android:gravity="center_vertical"
+            android:textStyle="bold"></TextView>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/info_layout"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true">
+
+        <ImageButton
+            android:id="@+id/info_icon"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="2dp"
+            android:layout_marginRight="10dp"
+            android:background="@android:drawable/ic_dialog_info"></ImageButton>
+
+    </RelativeLayout>
+
+</RelativeLayout>

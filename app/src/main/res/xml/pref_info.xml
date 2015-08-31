@@ -1,0 +1,19 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="어플 정보">
+
+        <Preference
+            android:summary="개발자 정보를 확인합니다"
+            android:title="개발자 정보">
+            <intent
+                android:targetClass="com.yapp.pic6.picproject.DeveloperInfoActivity"
+                android:targetPackage="com.yapp.pic6.picproject" />
+        </Preference>
+        <Preference
+            android:summary="개발자에게 메일을 보냅니다"
+            android:title="메일 보내기">
+            <intent
+                android:action="android.intent.action.SENDTO"
+                android:data="mailto:ohdoking@gmail.com" />
+        </Preference>
+    </PreferenceCategory>
+</PreferenceScreen>

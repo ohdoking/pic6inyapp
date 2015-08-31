@@ -4,7 +4,10 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.hardware.Camera" />
+    <uses-permission android:name="android.permission.GET_TASKS"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -12,26 +15,50 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".DialogMainActivity"
+            android:name=".DialogTestActivity"
             android:exported="true"
-            android:label="@string/title_activity_dialog_main" >
+            android:label="@string/title_activity_dialog_test" >
+        </activity>
+        <activity
+            android:name=".AddActivity"
+            android:label="@string/title_activity_add" >
+        </activity>
+        <activity
+            android:name=".GridAcitivy"
+            android:label="@string/title_activity_grid_acitivy" >
+        </activity>
+        <activity
+            android:name=".PicSettingsActivity"
+            android:label="@string/title_activity_pic_settings" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--
         <activity
-            android:name=".SettingsActivity"
-            android:label="@string/app_name" >
-
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:name=".DialogMainActivity"
+            android:label="@string/title_activity_dialog_main" >
         </activity>
-        -->
+
+        <service android:name=".service.FifthService" />
+
+        <receiver
+            android:name=".service.MyBroadcastReceiver"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="com.yapp.pic6.5sec" />
+            </intent-filter>
+        </receiver>
 
         <activity
-            android:name=".AddActivity"
-            android:label="@string/title_activity_add" >
+            android:name=".TutorialActivity"
+            android:label="@string/title_activity_tutorial" >
+        </activity>
+        <activity
+            android:name=".DeveloperInfoActivity"
+            android:label="@string/title_activity_developer_info" >
         </activity>
     </application>
 

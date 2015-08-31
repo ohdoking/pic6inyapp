@@ -1,4 +1,5 @@
 <resources>
+    <string name="title_activity_pic_settings">PIC</string>
 
     <!-- Strings related to Settings -->
 
@@ -10,8 +11,7 @@
         based on your message history
     </string>
 
-    <string name="pref_title_display_name">Display name</string>
-    <string name="pref_default_display_name">John Smith</string>
+    <string name="pref_title_display_name">튜토리얼</string>
 
     <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
     <string-array name="pref_example_list_titles">
@@ -49,7 +49,7 @@
     <string name="pref_title_system_sync_settings">System sync settings</string>
 
     <!-- Example settings for Notifications -->
-    <string name="pref_header_notifications">Notifications</string>
+    <string name="pref_header_env_setting">환경 설정</string>
 
     <string name="pref_title_new_message_notifications">New message notifications</string>
 

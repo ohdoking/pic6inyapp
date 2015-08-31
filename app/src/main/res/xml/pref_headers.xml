@@ -2,14 +2,8 @@
 
     <!-- These settings headers are only used on tablets. -->
 
-    <header android:fragment="com.yapp.pic6.picproject.SettingsActivity$GeneralPreferenceFragment"
-        android:title="@string/pref_header_general" />
-
     <header
-        android:fragment="com.yapp.pic6.picproject.SettingsActivity$NotificationPreferenceFragment"
-        android:title="@string/pref_header_notifications" />
-
-    <header android:fragment="com.yapp.pic6.picproject.SettingsActivity$DataSyncPreferenceFragment"
-        android:title="@string/pref_header_data_sync" />
+        android:fragment="com.yapp.pic6.picproject.PicSettingsActivity$GeneralPreferenceFragment"
+        android:title="@string/pref_header_env_setting" />
 
 </preference-headers>

@@ -2,21 +2,19 @@ package com.yapp.pic6.picproject;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.preference.RingtonePreference;
-import android.text.TextUtils;
+import android.preference.SwitchPreference;
+import android.util.Log;
 
+import com.yapp.pic6.picproject.service.FifthService;
 
 import java.util.List;
 
@@ -31,7 +29,7 @@ import java.util.List;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class SettingsActivity extends PreferenceActivity {
+public class PicSettingsActivity extends PreferenceActivity {
     /**
      * Determines whether to always show the simplified settings UI, where
      * settings are presented in a single list. When false, settings are shown
@@ -46,6 +44,7 @@ public class SettingsActivity extends PreferenceActivity {
         super.onPostCreate(savedInstanceState);
 
         setupSimplePreferencesScreen();
+        startService(new Intent(PicSettingsActivity.this, FifthService.class));
     }
 
     /**
@@ -61,28 +60,76 @@ public class SettingsActivity extends PreferenceActivity {
         // In the simplified UI, fragments are not used at all and we instead
         // use the older PreferenceActivity APIs.
 
-        // Add 'general' preferences.
-        addPreferencesFromResource(R.xml.pref_general);
-
         // Add 'notifications' preferences, and a corresponding header.
-        PreferenceCategory fakeHeader = new PreferenceCategory(this);
-        fakeHeader.setTitle(R.string.pref_header_notifications);
+
+        // Add 'general' preferences.
+        /*PreferenceCategory fakeHeader = new PreferenceCategory(this);
         getPreferenceScreen().addPreference(fakeHeader);
-        addPreferencesFromResource(R.xml.pref_notification);
+        fakeHeader.setTitle(R.string.pref_header_env_setting);*/
+//        fakeHeader = new PreferenceCategory(this);
+
+        addPreferencesFromResource(R.xml.pref_general);
+        addPreferencesFromResource(R.xml.pref_info);
+
+//        addPreferencesFromResource(R.xml.pref_notification);
 
         // Add 'data and sync' preferences, and a corresponding header.
-        fakeHeader = new PreferenceCategory(this);
-        fakeHeader.setTitle(R.string.pref_header_data_sync);
+        /*fakeHeader.setTitle(R.string.pref_header_data_sync);
         getPreferenceScreen().addPreference(fakeHeader);
-        addPreferencesFromResource(R.xml.pref_data_sync);
+        addPreferencesFromResource(R.xml.pref_data_sync);*/
 
         // Bind the summaries of EditText/List/Dialog/Ringtone preferences to
         // their values. When their values change, their summaries are updated
         // to reflect the new value, per the Android Design guidelines.
-        bindPreferenceSummaryToValue(findPreference("example_text"));
-        bindPreferenceSummaryToValue(findPreference("example_list"));
-        bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
-        bindPreferenceSummaryToValue(findPreference("sync_frequency"));
+//        bindPreferenceSummaryToValue(findPreference("example_text"));
+//        bindPreferenceSummaryToValue(findPreference("example_list"));
+//        bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
+//        bindPreferenceSummaryToValue(findPreference("sync_frequency"));
+
+        PreferenceManager preferenceManager = getPreferenceManager();
+
+
+        if (getPreferences().equals("ON") || getPreferences().isEmpty()) {
+            PreferenceManager.setDefaultValues(this, R.xml.pref_general, true);
+        } else {
+            PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
+
+        }
+        findPreference("autoUpdate").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object value) {
+                String stringValue = value.toString();
+
+                Log.i("value1", stringValue);
+                // For list preferences, look up the correct display value in
+                // the preference's 'entries' list.
+                if (((SwitchPreference) preference).isChecked()) {
+                    savePreferences(preference.getContext(), "ON");
+                    Log.i("value1", "ON");
+                } else {
+                    savePreferences(preference.getContext(), "OFF");
+                    Log.i("value1", "OFF");
+                }
+
+                return true;
+            }
+
+        });
+
+
+    }
+
+    private static void savePreferences(Context ctx, String value) {
+        SharedPreferences pref = ctx.getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("popup", value);
+        editor.commit();
+    }
+
+    // 값 불러오기
+    private String getPreferences() {
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        return pref.getString("popup", "");
     }
 
     /**
@@ -135,47 +182,20 @@ public class SettingsActivity extends PreferenceActivity {
         public boolean onPreferenceChange(Preference preference, Object value) {
             String stringValue = value.toString();
 
-            if (preference instanceof ListPreference) {
-                // For list preferences, look up the correct display value in
-                // the preference's 'entries' list.
-                ListPreference listPreference = (ListPreference) preference;
-                int index = listPreference.findIndexOfValue(stringValue);
-
-                // Set the summary to reflect the new value.
-                preference.setSummary(
-                        index >= 0
-                                ? listPreference.getEntries()[index]
-                                : null);
-
-            } else if (preference instanceof RingtonePreference) {
-                // For ringtone preferences, look up the correct display value
-                // using RingtoneManager.
-                if (TextUtils.isEmpty(stringValue)) {
-                    // Empty values correspond to 'silent' (no ringtone).
-                    preference.setSummary(R.string.pref_ringtone_silent);
-
-                } else {
-                    Ringtone ringtone = RingtoneManager.getRingtone(
-                            preference.getContext(), Uri.parse(stringValue));
-
-                    if (ringtone == null) {
-                        // Clear the summary if there was a lookup error.
-                        preference.setSummary(null);
-                    } else {
-                        // Set the summary to reflect the new ringtone display
-                        // name.
-                        String name = ringtone.getTitle(preference.getContext());
-                        preference.setSummary(name);
-                    }
-                }
-
+            Log.i("value1", stringValue);
+            // For list preferences, look up the correct display value in
+            // the preference's 'entries' list.
+            if (((SwitchPreference) preference).isChecked()) {
+                savePreferences(preference.getContext(), "ON");
+                Log.i("value1", "ON");
             } else {
-                // For all other preferences, set the summary to the value's
-                // simple string representation.
-                preference.setSummary(stringValue);
+                savePreferences(preference.getContext(), "OFF");
+                Log.i("value1", "OFF");
             }
+
             return true;
         }
+
     };
 
     /**
@@ -214,8 +234,7 @@ public class SettingsActivity extends PreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("example_text"));
-            bindPreferenceSummaryToValue(findPreference("example_list"));
+            bindPreferenceSummaryToValue(findPreference("autoUpdate"));
         }
     }
 
@@ -223,7 +242,7 @@ public class SettingsActivity extends PreferenceActivity {
      * This fragment shows notification preferences only. It is used when the
      * activity is showing a two-pane settings UI.
      */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+   /* @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class NotificationPreferenceFragment extends PreferenceFragment {
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -236,13 +255,13 @@ public class SettingsActivity extends PreferenceActivity {
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
         }
-    }
+    }*/
 
     /**
      * This fragment shows data and sync preferences only. It is used when the
      * activity is showing a two-pane settings UI.
      */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+   /* @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class DataSyncPreferenceFragment extends PreferenceFragment {
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -255,5 +274,5 @@ public class SettingsActivity extends PreferenceActivity {
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("sync_frequency"));
         }
-    }
+    }*/
 }

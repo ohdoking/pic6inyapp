@@ -1,15 +1,28 @@
 package com.yapp.pic6.picproject.service;
 
 import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.yapp.pic6.picproject.R;
+import com.yapp.pic6.picproject.dao.Gallery;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class GalleryHelper {
 
@@ -21,14 +34,32 @@ public class GalleryHelper {
     private static final int INDEX_MEDIA_TYPE = 1;
     private static final int INDEX_BUCKET_NAME = 2;
 
+    public static final String STRSAVEPATH = Environment.getExternalStorageDirectory()+"/Pictures/";
+    public static final String TRASHPATH = STRSAVEPATH + "Trash/";
+
 
     public GalleryHelper(Context context) {
         this.context = context;
         cr = context.getContentResolver();
-    }
 
+        if(!(getPreferences()==1)){
+            makeDirectory("Trash");
+            savePreferences(1);
+        }
+    }
+    // 값 저장하기
+    private void savePreferences(int value){
+        SharedPreferences pref = context.getSharedPreferences("pref", context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putInt("first", value);
+        editor.commit();
+    }
+    private Integer getPreferences(){
+        SharedPreferences pref = context.getSharedPreferences("pref", context.MODE_PRIVATE);
+        return pref.getInt("first", 0);
+    }
     //GET New Picture
-    public Cursor newPicture() {
+    public ArrayList<String> newPicture() {
 
 
         Cursor mImageCursor;
@@ -45,18 +76,32 @@ public class GalleryHelper {
 
         mImageCursor.moveToNext();
 
-        String filePath;
-        String[] filePathColumn = {android.provider.MediaStore.MediaColumns.DATA};
-        int columnIndex = mImageCursor.getColumnIndex(filePathColumn[0]);
-        filePath = mImageCursor.getString(columnIndex);
 
+        ArrayList<String> arr = new ArrayList<String>();
+        if (mImageCursor.moveToFirst()) {
+            String data;
+            int dataColumn = mImageCursor.getColumnIndex(
+                    MediaStore.Images.Media.DATA);
+
+            do {
+                // Get the field values
+                data = mImageCursor.getString(dataColumn);
+                // Do something with the values.
+                Log.i("ListingImages"," _data=" + data);
+                arr.add(data);
+            } while (mImageCursor.moveToNext());
+        }
+        mImageCursor.close();
 
 //        GalleryCount.setText(filePath);
         // GalleryCount.setText(String.valueOf(mImageCursor.getLong(mIm
 //        GalleryCount.setText(String.valueOf(mImageCursor.getCount()));
 //        GalleryCount.setText(String.valueOf(mImageCursor.getString(mImageCursor.getColumnIndex("_data"))));
 //          //  GalleryCount.setText(Environment.getExternalStorageDirectory().toString());
-        //fileUMove(mImageCursor.getString(mImageCursor.getColumnIndex("_data")), Environment.getExternalStorageDirectory() + "/Pictures/Instagram/test.jpg");
+
+
+
+//        fileUMove(mImageCursor.getString(mImageCursor.getColumnIndex("_data")), Environment.getExternalStorageDirectory() + "/Pictures/Instagram/test.jpg");
 
 
 
@@ -83,15 +128,15 @@ public class GalleryHelper {
                 "//" + String.valueOf(mImageCursor2.getLong(mImageCursor2.getColumnIndex("date_modified"))));*/
 
 
-               /* ageCursor.getColumnIndex("date_added"))
+               /* ageCursor.getC    olumnIndex("date_added"))
                 + "//" + String.valueOf(mImageCursor.getLong(mImageCursor.getColumnIndex("date_modified")))));*/
 
         //_data=?", selectionArgs1);
 //        Log.i("ohdoking", "2");
-        return mImageCursor;
+        return arr;
     }
 
-    public void getGallery() {
+    public ArrayList<Gallery> getGallery() {
 
         String[] PROJECTION_BUCKET = {
                 android.provider.MediaStore.Images.ImageColumns.BUCKET_ID,
@@ -118,7 +163,7 @@ public class GalleryHelper {
                 images, PROJECTION_BUCKET, BUCKET_GROUP_BY, null, BUCKET_ORDER_BY);
 
         Log.i("ListingImages", " query count=" + cur.getCount());
-
+        ArrayList<Gallery> arr = new ArrayList<Gallery>();
         if (cur.moveToFirst()) {
             String bucket;
             String date;
@@ -136,13 +181,20 @@ public class GalleryHelper {
                 bucket = cur.getString(bucketColumn);
                 date = cur.getString(dateColumn);
                 data = cur.getString(dataColumn);
-
+                Gallery gallery = new Gallery();
+                gallery.setName(bucket);
+                gallery.setImagePath(data);
                 // Do something with the values.
                 Log.i("ListingImages", " bucket=" + bucket
                         + "  date_taken=" + date
                         + "  _data=" + data);
+                arr.add(gallery);
             } while (cur.moveToNext());
         }
+
+
+
+        return arr;
     }
 
     public void deleteImage(String value) {
@@ -150,19 +202,19 @@ public class GalleryHelper {
         cr.delete(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "_data=?", selectionArgs0);
     }
 
-    private void fileUMove(String inFileName, String outFileName) {
+    public void fileUMove(String inFileName, String outFileName) {
 
         File sourceLocation = new File(inFileName);
         File targetLocation = new File(outFileName);
+        Log.i("ohdoking", inFileName);
+        Log.i("ohdoking", outFileName);
         try {
             if (sourceLocation.renameTo(targetLocation)) {
-                Log.i("ohdoking", inFileName);
-                Log.i("ohdoking", outFileName);
 
-                ContentValues values = new ContentValues();
-                values.put("date_modified", ((new Date().getTime() - (60 * 60 * 24 * 1000)) / 1000));
-                String[] selectionArgs1 = {outFileName};
-                cr.update(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values, "_data=?", selectionArgs1);
+//                ContentValues values = new ContentValues();
+//                values.put("date_modified", ((new Date().getTime() - (60 * 60 * 24 * 1000)) / 1000));
+//                String[] selectionArgs1 = {outFileName};
+//                cr.update(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values, "_data=?", selectionArgs1);
 
 
 
@@ -179,6 +231,38 @@ public class GalleryHelper {
 
     }
 
+    //create Dir
+    public File makeDirectory(String dir_path){
+        File dir = new File(STRSAVEPATH + dir_path);
+        if (!dir.exists())
+        {
+            dir.mkdirs();
+
+            Bitmap bm = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
+
+            File file = new File(STRSAVEPATH + dir_path, "myApp.PNG");
+            FileOutputStream outStream = null;
+            try {
+                outStream = new FileOutputStream(file);
+                bm.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+                outStream.flush();
+                outStream.close();
+
+                String str = context.getResources().getString(R.string.create_folder_content);
+                Toast.makeText(context, dir_path + str, Toast.LENGTH_LONG).show();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            String str = context.getResources().getString(R.string.already_exist);
+            Toast.makeText(context,str,Toast.LENGTH_SHORT).show();
+        }
+        return dir;
+    }
+
     public String getPath(Uri uri) {
         String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
@@ -189,5 +273,48 @@ public class GalleryHelper {
         return cursor.getString(columnIndex);
     }
 
+
+    public void deleteTrash(){
+
+        List<File> dirList = getDirFileList(TRASHPATH);
+        for(int i=0; i<dirList.size(); i++) {
+            String delFileName = dirList.get(i).getName();
+            fileDelete(TRASHPATH + delFileName);
+        }
+        Toast.makeText(context, "Clear Trash", Toast.LENGTH_SHORT).show();
+    }
+
+
+    public void moveTrash(String inFileName){
+
+
+       // String[] directoryName = inFileName.split("\\\\");
+
+        File f = new File(inFileName);
+         String fileName = f.getName();
+
+        fileUMove((inFileName), (TRASHPATH + fileName));
+        Log.i("ss",inFileName+"//"+TRASHPATH+fileName);
+        Toast.makeText(context, "Move Trash", Toast.LENGTH_SHORT).show();
+    }
+
+    //file delete
+    public void fileDelete(String deleteFileName){
+        File delFile = new File(deleteFileName);
+        delFile.delete();
+    }
+
+    //read file list in folder
+    public List<File> getDirFileList(String dirPath){
+        List<File> dirFileList = null; // folder file lists
+        File dir = new File(dirPath);
+        if (dir.exists()) {
+            File[] files;
+            files = dir.listFiles();
+            dirFileList = Arrays.asList(files);
+        }
+
+        return dirFileList;
+    }
 
 }
