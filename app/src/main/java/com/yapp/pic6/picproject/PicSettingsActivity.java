@@ -13,6 +13,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.yapp.pic6.picproject.service.FifthService;
 
@@ -44,7 +45,7 @@ public class PicSettingsActivity extends PreferenceActivity {
         super.onPostCreate(savedInstanceState);
 
         setupSimplePreferencesScreen();
-        startService(new Intent(PicSettingsActivity.this, FifthService.class));
+//        startService(new Intent(PicSettingsActivity.this, FifthService.class));
     }
 
     /**
@@ -88,10 +89,20 @@ public class PicSettingsActivity extends PreferenceActivity {
 
         PreferenceManager preferenceManager = getPreferenceManager();
 
+        //첫방문 체크
 
-        if (getPreferences().equals("ON") || getPreferences().isEmpty()) {
+        if(getPreferences().isEmpty()){
+            startService(new Intent(this, FifthService.class));
+            Toast.makeText(this,
+                    "NewOn", Toast.LENGTH_LONG).show();
+//            saveNewVisit(this,"1");
+        }
+
+        if (getPreferences().equals("OFF") || getPreferences().isEmpty()) {
             PreferenceManager.setDefaultValues(this, R.xml.pref_general, true);
-        } else {
+
+        }
+        else {
             PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
 
         }
@@ -104,11 +115,17 @@ public class PicSettingsActivity extends PreferenceActivity {
                 // For list preferences, look up the correct display value in
                 // the preference's 'entries' list.
                 if (((SwitchPreference) preference).isChecked()) {
-                    savePreferences(preference.getContext(), "ON");
-                    Log.i("value1", "ON");
-                } else {
                     savePreferences(preference.getContext(), "OFF");
-                    Log.i("value1", "OFF");
+                    stopService(new Intent(preference.getContext(), FifthService.class));
+                    Toast.makeText(preference.getContext(),
+                            "OFF", Toast.LENGTH_LONG).show();
+                    Log.i("value2", "OFF");
+                } else {
+                    savePreferences(preference.getContext(), "ON");
+                    startService(new Intent(preference.getContext(), FifthService.class));
+                    Toast.makeText(preference.getContext(),
+                            "ON", Toast.LENGTH_LONG).show();
+                    Log.i("value2", "ON");
                 }
 
                 return true;
@@ -132,6 +149,18 @@ public class PicSettingsActivity extends PreferenceActivity {
         return pref.getString("popup", "");
     }
 
+    private static void saveNewVisit(Context ctx, String value) {
+        SharedPreferences pref = ctx.getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("visit", value);
+        editor.commit();
+    }
+
+    // 값 불러오기
+    private String getNewVisit() {
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        return pref.getString("visit", "");
+    }
     /**
      * {@inheritDoc}
      */
@@ -187,9 +216,11 @@ public class PicSettingsActivity extends PreferenceActivity {
             // the preference's 'entries' list.
             if (((SwitchPreference) preference).isChecked()) {
                 savePreferences(preference.getContext(), "ON");
+
                 Log.i("value1", "ON");
             } else {
                 savePreferences(preference.getContext(), "OFF");
+
                 Log.i("value1", "OFF");
             }
 

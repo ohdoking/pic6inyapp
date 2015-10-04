@@ -19,4 +19,5 @@
     <string name="close_order">한 번 더 누르시면 종료</string>
     <string name="trash">휴지통</string>
     <string name="newfolder">앨범 추가</string>
+    <string name="title_activity_finish_test">FinishTestActivity</string>
 </resources>

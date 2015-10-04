@@ -2,6 +2,7 @@ package com.yapp.pic6.picproject.service;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -87,7 +88,11 @@ public class GalleryHelper {
                 // Get the field values
                 data = mImageCursor.getString(dataColumn);
                 // Do something with the values.
-                Log.i("ListingImages"," _data=" + data);
+                Log.i("ListingImages", " _data=" + data);
+                Log.i("new_old_Images",
+                        " mody=" + mImageCursor.getString(mImageCursor.getColumnIndex(android.provider.MediaStore.Images.ImageColumns.DATE_MODIFIED))
+                                +" // add=" + mImageCursor.getString(mImageCursor.getColumnIndex(MediaStore.Images.ImageColumns.DATE_ADDED))
+                );
                 arr.add(data);
             } while (mImageCursor.moveToNext());
         }
@@ -216,6 +221,8 @@ public class GalleryHelper {
 //                String[] selectionArgs1 = {outFileName};
 //                cr.update(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values, "_data=?", selectionArgs1);
 
+                removeMedia(context, sourceLocation);
+                addMedia(context, targetLocation);
 
 
             } else {
@@ -229,6 +236,18 @@ public class GalleryHelper {
         }
 
 
+    }
+
+
+    public static void addMedia(Context c, File f) {
+        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        intent.setData(Uri.fromFile(f));
+        c.sendBroadcast(intent);
+    }
+
+    private static void removeMedia(Context c, File f) {
+        ContentResolver resolver = c.getContentResolver();
+        resolver.delete(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, android.provider.MediaStore.Images.Media.DATA + "=?", new String[]{f.getAbsolutePath()});
     }
 
     //create Dir
@@ -281,6 +300,8 @@ public class GalleryHelper {
             String delFileName = dirList.get(i).getName();
             fileDelete(TRASHPATH + delFileName);
         }
+
+
         Toast.makeText(context, "Clear Trash", Toast.LENGTH_SHORT).show();
     }
 
