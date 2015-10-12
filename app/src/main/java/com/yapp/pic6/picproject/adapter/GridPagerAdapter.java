@@ -152,7 +152,7 @@ public class GridPagerAdapter extends PagerAdapter {
                     }
                     AlertDialog.Builder alert = new AlertDialog.Builder(themedContext);
                     alert.setTitle(R.string.new_album);
-//                alert.setMessage("Pls Input Album's Name");
+//                alert.setMessage("Pls input Album's Name");
 
                     // Create EditText for entry
                     final EditText input = new EditText(context);

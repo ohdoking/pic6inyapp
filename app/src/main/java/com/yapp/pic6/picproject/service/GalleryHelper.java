@@ -186,9 +186,12 @@ public class GalleryHelper {
                 bucket = cur.getString(bucketColumn);
                 date = cur.getString(dateColumn);
                 data = cur.getString(dataColumn);
+
+                File file = new File(data);
+
                 Gallery gallery = new Gallery();
                 gallery.setName(bucket);
-                gallery.setImagePath(data);
+                gallery.setImagePath( file.getParent());
                 // Do something with the values.
                 Log.i("ListingImages", " bucket=" + bucket
                         + "  date_taken=" + date
@@ -211,8 +214,8 @@ public class GalleryHelper {
 
         File sourceLocation = new File(inFileName);
         File targetLocation = new File(outFileName);
-        Log.i("ohdoking", inFileName);
-        Log.i("ohdoking", outFileName);
+        Log.i("ohdokingi", inFileName);
+        Log.i("ohdokingo", outFileName);
         try {
             if (sourceLocation.renameTo(targetLocation)) {
 
@@ -221,7 +224,7 @@ public class GalleryHelper {
 //                String[] selectionArgs1 = {outFileName};
 //                cr.update(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values, "_data=?", selectionArgs1);
 
-                removeMedia(context, sourceLocation);
+                removeMedia(context, sourceLocation.getAbsoluteFile());
                 addMedia(context, targetLocation);
 
 
@@ -250,7 +253,11 @@ public class GalleryHelper {
         resolver.delete(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, android.provider.MediaStore.Images.Media.DATA + "=?", new String[]{f.getAbsolutePath()});
     }
 
-    //create Dir
+    /*
+         폴더 생성
+         params
+            dir_path : 폴더 이름
+     */
     public File makeDirectory(String dir_path){
         File dir = new File(STRSAVEPATH + dir_path);
         if (!dir.exists())
@@ -259,14 +266,16 @@ public class GalleryHelper {
 
             Bitmap bm = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
 
+
             File file = new File(STRSAVEPATH + dir_path, "myApp.PNG");
             FileOutputStream outStream = null;
+
             try {
                 outStream = new FileOutputStream(file);
                 bm.compress(Bitmap.CompressFormat.PNG, 100, outStream);
                 outStream.flush();
                 outStream.close();
-
+                addMedia(context, file);
                 String str = context.getResources().getString(R.string.create_folder_content);
                 Toast.makeText(context, dir_path + str, Toast.LENGTH_LONG).show();
 
@@ -306,6 +315,11 @@ public class GalleryHelper {
     }
 
 
+    /*
+        휴지통 이동
+        params
+            inFileName : 파일 경로
+     */
     public void moveTrash(String inFileName){
 
 

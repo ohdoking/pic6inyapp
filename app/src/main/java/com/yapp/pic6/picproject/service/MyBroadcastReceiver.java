@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.yapp.pic6.picproject.DialogMainActivity;
+import com.yapp.pic6.picproject.PicMainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
                 && !isActivity(context,DialogMainActivity.class)
                 && !oldPicture.equals(newPicture)
                 ) {
-            Intent dialogIntent = new Intent(context, DialogMainActivity.class);
+            Intent dialogIntent = new Intent(context, PicMainActivity.class);
             savePreferences(context,newPicture);
             dialogIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pi = PendingIntent.getActivity(context, 0, dialogIntent, PendingIntent.FLAG_ONE_SHOT);

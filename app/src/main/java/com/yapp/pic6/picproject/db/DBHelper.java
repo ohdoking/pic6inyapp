@@ -20,6 +20,7 @@ public class DBHelper extends SQLiteOpenHelper {
    public static final String GALLERYS_COLUMN_ID = "id";
    public static final String GALLERYS_COLUMN_NAME = "name";
    public static final String GALLERYS_COLUMN_ORDER = "gorder";
+   public static final String GALLERYS_COLUMN_IMAGE_PATH = "imgpath";
 
    private HashMap hp;
 
@@ -33,7 +34,7 @@ public class DBHelper extends SQLiteOpenHelper {
       // TODO Auto-generated method stub
       db.execSQL(
       "create table " + GALLERYS_TABLE_NAME +
-      "(id integer primary key, name text,gorder text)"
+      "(id integer primary key, name text,gorder text,imgpath)"
       );
    }
 

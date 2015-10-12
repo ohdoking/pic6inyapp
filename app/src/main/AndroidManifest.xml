@@ -64,6 +64,11 @@
             android:name=".FinishTestActivity"
             android:label="@string/title_activity_finish_test" >
         </activity>
+        <activity
+            android:name=".PicMainActivity"
+            android:label="@string/title_activity_pic_main"
+            >
+        </activity>
     </application>
 
 </manifest>
