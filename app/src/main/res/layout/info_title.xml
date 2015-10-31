@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="right"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_height="fill_parent"
+        android:layout_width="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="24dp"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/image_nemonemotong"/>
+
+    <ImageView
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:src="@mipmap/logo_ver2"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="22dp"
+        android:text="쉽고 빠른 사진 정리"/>
+
+    <ImageView
+        android:layout_height="fill_parent"
+        android:layout_width="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="24dp"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/main2_07"/>
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="24dp"
+        android:background="#fefefe"
+        />
+
+</LinearLayout>

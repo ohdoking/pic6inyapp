@@ -20,4 +20,9 @@
 
     </style>
 
+    <style name="PreferencesTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:background">#ffffff</item>
+        <item name="android:listPreferredItemHeight">48dp</item>
+    </style>
+
 </resources>
