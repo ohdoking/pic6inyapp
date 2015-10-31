@@ -29,6 +29,7 @@
         </activity>
         <activity
             android:name=".PicSettingsActivity"
+            android:theme="@style/PreferencesTheme"
             android:label="@string/title_activity_pic_settings" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -69,8 +70,11 @@
         </activity>
         <activity
             android:name=".PicMainActivity"
-            android:label="@string/title_activity_pic_main"
-            >
+            android:label="@string/title_activity_pic_main" >
+        </activity>
+        <activity
+            android:name=".PhotoViewActivity"
+            android:label="@string/title_activity_photo_view" >
         </activity>
     </application>
 

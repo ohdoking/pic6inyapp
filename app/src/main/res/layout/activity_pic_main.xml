@@ -24,7 +24,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
-                android:src="@mipmap/ic_photo_library_black_36dp" />
+                android:src="@mipmap/logo" />
 
             <ImageView
                 android:layout_width="0dp"
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
                 android:layout_marginRight="15dp"
-                android:background="@drawable/setting_btn" />
+                android:background="@mipmap/ic_setting" />
 
             <Button
                 android:id="@+id/btn_close"
@@ -101,7 +101,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1"
                     android:layout_marginRight="15dp"
-                    android:background="@mipmap/ic_add_black_36dp" />
+                    android:background="@mipmap/ic_addfolder" />
 
                 <Button
                     android:id="@+id/btn_share"
@@ -109,14 +109,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1"
                     android:layout_marginRight="15dp"
-                    android:background="@mipmap/ic_share_black_36dp" />
+                    android:background="@mipmap/ic_share" />
 
                 <Button
                     android:id="@+id/btn_trash"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1"
-                    android:background="@mipmap/ic_delete_black_36dp" />
+                    android:background="@mipmap/ic_trash" />
             </LinearLayout>
 
         </LinearLayout>

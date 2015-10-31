@@ -89,6 +89,13 @@ public class PicMainActivity extends Activity {
 
         gh = new GalleryHelper(PicMainActivity.this);
 
+
+        File file = new File(gh.TRASHPATH);
+        if(!file.exists() && !file.isDirectory()){
+            gh.makeDirectory("Trash");
+        }
+
+
         getId();
         clickevent();
 
@@ -149,7 +156,7 @@ public class PicMainActivity extends Activity {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 4;
     //		options.inJustDecodeBounds = true;
-            Bitmap bitmapImage = BitmapFactory.decodeFile(newPictureList.get(i),options);
+            final Bitmap bitmapImage = BitmapFactory.decodeFile(newPictureList.get(i),options);
             if(bitmapImage != null){
                 resized = Bitmap.createScaledBitmap(bitmapImage, 500, 500, true);
             }
@@ -194,24 +201,34 @@ public class PicMainActivity extends Activity {
 //                        arraySelect.remove(index);
                     }
 
-                    if (arraySelect.indexOf(0) == -1){
+                    if (arraySelect.indexOf(0) == -1) {
                         allPhotoCb.setChecked(true);
                     }
 
 
-
                     num = 0;
-                    for(Integer j:arraySelect){
-                        if(j==1){
+                    for (Integer j : arraySelect) {
+                        if (j == 1) {
                             ++num;
                         }
                     }
 
 
-                    tvCount.setText(String.valueOf(newPictureList.size()) + "장의 사진 중 "+String.valueOf(num)+"장 선택 ");
+                    tvCount.setText(String.valueOf(newPictureList.size()) + "장의 사진 중 " + String.valueOf(num) + "장 선택 ");
 //                    tvCount.setText(String.valueOf(newPictureList.size()) + " -  "+String.valueOf(num)+"! ");
 
 
+                }
+            });
+
+            imageView[index].setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Intent i = new Intent(PicMainActivity.this,PhotoViewActivity.class);
+                    i.putExtra("event_name", bitmapImage);
+                    startActivity(i);
+
+                    return false;
                 }
             });
 
@@ -268,8 +285,12 @@ public class PicMainActivity extends Activity {
                     File moveFile = new File(movePath);
                     if(!imagePath.equals(movePath)){
 
-                        Log.i("ohdoking",imagePath + " -> " + movePath +"/"+ orginFile.getName());
-                        gh.fileUMove(imagePath, movePath + "/" + orginFile.getName());
+                        Log.i("ohdoking", imagePath + " -> " + movePath + "/" + orginFile.getName());
+
+                        if(!imagePath.equals(movePath +"/"+ orginFile.getName())){
+                            gh.fileUMove(imagePath, movePath + "/" + orginFile.getName());
+                        }
+
                     }
                     else{
                         Log.i("ohdoking","same");
@@ -335,7 +356,7 @@ public class PicMainActivity extends Activity {
 
                 //비었을때
                 if(mAdapter.getTempImagePathList().isEmpty()){
-                    Toast.makeText(getApplicationContext(), "공유할 사진을 선택해주세요", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "공유할 사진을 선택해주세요 ", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     ArrayList<String> tempShare = new ArrayList<String>();
@@ -397,8 +418,8 @@ public class PicMainActivity extends Activity {
                     }
                 }
 
-                tvCount.setText(String.valueOf(newPictureList.size()) + " -  " + String.valueOf(num) + "! ");
-
+//                tvCount.setText(String.valueOf(newPictureList.size()) + " -  " + String.valueOf(num) + "! ");
+                tvCount.setText(String.valueOf(newPictureList.size()) + "장의 사진 중 " + String.valueOf(num) + "장 선택 ");
             }
         });
 

@@ -68,7 +68,7 @@ public class PicSettingsActivity extends PreferenceActivity {
         getPreferenceScreen().addPreference(fakeHeader);
         fakeHeader.setTitle(R.string.pref_header_env_setting);*/
 //        fakeHeader = new PreferenceCategory(this);
-
+        addPreferencesFromResource(R.xml.pref_title);
         addPreferencesFromResource(R.xml.pref_general);
         addPreferencesFromResource(R.xml.pref_info);
 
