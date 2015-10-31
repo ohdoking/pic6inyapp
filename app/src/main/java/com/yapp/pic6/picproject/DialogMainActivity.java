@@ -1,7 +1,6 @@
 package com.yapp.pic6.picproject;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -12,6 +11,7 @@ import android.widget.Toast;
 
 import com.yapp.pic6.picproject.adapter.GridPagerAdapter;
 import com.yapp.pic6.picproject.adapter.ImageAdapter;
+
 
 
 public class DialogMainActivity extends Activity {
@@ -52,8 +52,18 @@ public class DialogMainActivity extends Activity {
         settingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(DialogMainActivity.this,PicSettingsActivity.class);
-                startActivity(i);
+               /* Intent i = new Intent(DialogMainActivity.this,PicSettingsActivity.class);
+                startActivity(i);*/
+               /* new BottomSheet.Builder(this, R.style.BottomSheet_StyleDialog)
+                        .title("New")
+                        .grid() // <-- important part
+                        .sheet(R.menu.menu_dialog_main)
+                        .listener(new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // TODO
+                            }
+                        }).show();*/
             }
         });
 

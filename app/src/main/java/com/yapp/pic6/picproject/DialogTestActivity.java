@@ -111,7 +111,7 @@ public class DialogTestActivity extends Activity {
             public void onClick(View v) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(DialogTestActivity.this);
                 alert.setTitle(R.string.new_album);
-//                alert.setMessage("Pls Input Album's Name");
+//                alert.setMessage("Pls input Album's Name");
 
                 // Create EditText for entry
                 final EditText input = new EditText(DialogTestActivity.this);
@@ -169,7 +169,7 @@ public class DialogTestActivity extends Activity {
 
     }
 
-    // °ª ºÒ·¯¿À±â
+    // ê°’ ë¶ˆëŸ¬ì˜¤ê¸°
     private String getPreferences(){
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         return pref.getString("popup", "");

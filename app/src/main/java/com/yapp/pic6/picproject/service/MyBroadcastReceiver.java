@@ -6,10 +6,13 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.yapp.pic6.picproject.DialogMainActivity;
+import com.yapp.pic6.picproject.PicMainActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyBroadcastReceiver extends BroadcastReceiver {
@@ -22,13 +25,25 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
     public void onReceive (Context context, Intent intent) { // 10초 내에 수행되어야 함
         gh = new GalleryHelper(context);
         boolean temp = isRunningProcess(context, "");
-        boolean isEmptyNewPic = gh.newPicture().isEmpty();
+        ArrayList<String> newPictureArray = gh.newPicture();
+        boolean isEmptyNewPic = newPictureArray.isEmpty();
+        String newPicture = "none";
+        if(newPictureArray.isEmpty()){
+            newPicture = "0";
+        }
+        else{
+            newPicture = newPictureArray.get(0);
+        }
+        String oldPicture = getPreferences(context);
 //        isActivity()
-        Log.i(TAG, "ohdoking" + temp+"//"+String.valueOf(isEmptyNewPic));
+        Log.i(TAG, "ohdoking" + temp+"//"+String.valueOf(isEmptyNewPic)+"//"+oldPicture+"//"+newPicture);
         if (!temp
                 && !isEmptyNewPic
-                && !isActivity(context,DialogMainActivity.class)) {
-            Intent dialogIntent = new Intent(context, DialogMainActivity.class);
+                && !isActivity(context,DialogMainActivity.class)
+                && !oldPicture.equals(newPicture)
+                ) {
+            Intent dialogIntent = new Intent(context, PicMainActivity.class);
+            savePreferences(context,newPicture);
             dialogIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pi = PendingIntent.getActivity(context, 0, dialogIntent, PendingIntent.FLAG_ONE_SHOT);
             try {
@@ -90,5 +105,18 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         ComponentName componentName = running.topActivity;
 
         return cls.getName().equals(componentName.getClassName());
+    }
+
+    private static void savePreferences(Context ctx, String value) {
+        SharedPreferences pref = ctx.getSharedPreferences("pref", ctx.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("oldPicture", value);
+        editor.commit();
+    }
+
+    // 값 불러오기
+    private String getPreferences(Context ctx) {
+        SharedPreferences pref = ctx.getSharedPreferences("pref", ctx.MODE_PRIVATE);
+        return pref.getString("oldPicture", "");
     }
 }

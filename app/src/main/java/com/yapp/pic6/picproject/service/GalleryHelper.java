@@ -2,6 +2,7 @@ package com.yapp.pic6.picproject.service;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -87,7 +88,11 @@ public class GalleryHelper {
                 // Get the field values
                 data = mImageCursor.getString(dataColumn);
                 // Do something with the values.
-                Log.i("ListingImages"," _data=" + data);
+                Log.i("ListingImages", " _data=" + data);
+                Log.i("new_old_Images",
+                        " mody=" + mImageCursor.getString(mImageCursor.getColumnIndex(android.provider.MediaStore.Images.ImageColumns.DATE_MODIFIED))
+                                +" // add=" + mImageCursor.getString(mImageCursor.getColumnIndex(MediaStore.Images.ImageColumns.DATE_ADDED))
+                );
                 arr.add(data);
             } while (mImageCursor.moveToNext());
         }
@@ -181,9 +186,12 @@ public class GalleryHelper {
                 bucket = cur.getString(bucketColumn);
                 date = cur.getString(dateColumn);
                 data = cur.getString(dataColumn);
+
+                File file = new File(data);
+
                 Gallery gallery = new Gallery();
                 gallery.setName(bucket);
-                gallery.setImagePath(data);
+                gallery.setImagePath( file.getParent());
                 // Do something with the values.
                 Log.i("ListingImages", " bucket=" + bucket
                         + "  date_taken=" + date
@@ -206,8 +214,8 @@ public class GalleryHelper {
 
         File sourceLocation = new File(inFileName);
         File targetLocation = new File(outFileName);
-        Log.i("ohdoking", inFileName);
-        Log.i("ohdoking", outFileName);
+        Log.i("ohdokingi", inFileName);
+        Log.i("ohdokingo", outFileName);
         try {
             if (sourceLocation.renameTo(targetLocation)) {
 
@@ -216,6 +224,8 @@ public class GalleryHelper {
 //                String[] selectionArgs1 = {outFileName};
 //                cr.update(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values, "_data=?", selectionArgs1);
 
+                removeMedia(context, sourceLocation.getAbsoluteFile());
+                addMedia(context, targetLocation);
 
 
             } else {
@@ -231,7 +241,23 @@ public class GalleryHelper {
 
     }
 
-    //create Dir
+
+    public static void addMedia(Context c, File f) {
+        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        intent.setData(Uri.fromFile(f));
+        c.sendBroadcast(intent);
+    }
+
+    private static void removeMedia(Context c, File f) {
+        ContentResolver resolver = c.getContentResolver();
+        resolver.delete(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, android.provider.MediaStore.Images.Media.DATA + "=?", new String[]{f.getAbsolutePath()});
+    }
+
+    /*
+         폴더 생성
+         params
+            dir_path : 폴더 이름
+     */
     public File makeDirectory(String dir_path){
         File dir = new File(STRSAVEPATH + dir_path);
         if (!dir.exists())
@@ -240,14 +266,16 @@ public class GalleryHelper {
 
             Bitmap bm = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
 
+
             File file = new File(STRSAVEPATH + dir_path, "myApp.PNG");
             FileOutputStream outStream = null;
+
             try {
                 outStream = new FileOutputStream(file);
                 bm.compress(Bitmap.CompressFormat.PNG, 100, outStream);
                 outStream.flush();
                 outStream.close();
-
+                addMedia(context, file);
                 String str = context.getResources().getString(R.string.create_folder_content);
                 Toast.makeText(context, dir_path + str, Toast.LENGTH_LONG).show();
 
@@ -281,10 +309,17 @@ public class GalleryHelper {
             String delFileName = dirList.get(i).getName();
             fileDelete(TRASHPATH + delFileName);
         }
+
+
         Toast.makeText(context, "Clear Trash", Toast.LENGTH_SHORT).show();
     }
 
 
+    /*
+        휴지통 이동
+        params
+            inFileName : 파일 경로
+     */
     public void moveTrash(String inFileName){
 
 
