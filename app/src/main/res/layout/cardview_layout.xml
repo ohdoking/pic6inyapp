@@ -11,13 +11,14 @@
         android:id="@+id/img_thumbnail"
         android:layout_width="fill_parent"
         android:layout_height="70dp"
-        android:src="@mipmap/folder_green" />
+        android:src="@mipmap/folder_yellow" />
 
     <TextView
         android:id="@+id/tv_movie"
         android:gravity="center_horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:textColor="#363636"
         android:text="Test"
         android:textSize="13sp" />
 

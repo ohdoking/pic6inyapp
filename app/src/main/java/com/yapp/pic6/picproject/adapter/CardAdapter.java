@@ -1,7 +1,6 @@
 package com.yapp.pic6.picproject.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +16,7 @@ import com.yapp.pic6.picproject.R;
 import com.yapp.pic6.picproject.dao.Gallery;
 import com.yapp.pic6.picproject.service.GalleryHelper;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
@@ -27,11 +27,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
 
 	Integer currentPosition;
 
-	//¿ø·¡ ±âº»
+	//ì›ë˜ ê¸°ë³¸
 	ArrayList<String> originPath;
-	//ÀÌµ¿ µÇ´Â ¹øÈ£
+	//ì´ë™ ë˜ëŠ” ë²ˆí˜¸
 	ArrayList<Integer> tempPath;
-	//ÀÌµ¿µÈ °æ·Î
+	//ì´ë™ëœ ê²½ë¡œ
 	ArrayList<String> movePath;
 
 	ArrayList<Integer> arraySelect;
@@ -178,20 +178,37 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
 					LinearLayout r = (LinearLayout) ((ViewGroup) itemView.getParent()).getParent();
 					HorizontalScrollView h = (HorizontalScrollView)r.getChildAt(1);
 					LinearLayout l1 = (LinearLayout)h.getChildAt(0);
+					//FrameLayout f1 = (FrameLayout)l1.getChildAt(0);
 
 
-					//ºñ¾úÀ»¶§
+
+
+
+
+					//ë¹„ì—ˆì„ë•Œ
 					if(tempPath.isEmpty()){
-						Toast.makeText(itemView.getContext(),currentItem.getImagePath() +" - NONE",Toast.LENGTH_SHORT).show();
+//						Toast.makeText(itemView.getContext(),currentItem.getImagePath() +" - NONE",Toast.LENGTH_SHORT).show();
+						Toast.makeText(itemView.getContext(),"ì‚¬ì§„ì„ ì„ íƒí•´ì£¼ì„¸ìš”.",Toast.LENGTH_SHORT).show();
 					}
 					else{
-						Toast.makeText(itemView.getContext(), currentItem.getImagePath() + " - " + imgPaths.get(0).toString(), Toast.LENGTH_SHORT).show();
+
+						File f = new File(currentItem.getImagePath());
+						String fileName = f.getName();
+
+						File f2 = new File(imgPaths.get(0).toString());
+						String fileName2 = f2.getName();
+
+						Toast.makeText(itemView.getContext(), "'" + fileName2 + "' ì—ì„œ '" + fileName + "'ë¡œ ì´ë™ ë˜ì—ˆìŠµë‹ˆë‹¤.", Toast.LENGTH_SHORT).show();
 						for(Integer imagePath :tempPath){
 							movePath.set(imagePath, currentItem.getImagePath());
 							Log.i("integer", String.valueOf(imagePath));
-							ImageView img = (ImageView)l1.getChildAt(imagePath);
-							img.setColorFilter(Color.GRAY);
+//
+
+
+//							Drawable d = context.getResources().getDrawable(R.mipmap.ic_addfolder);
+//							img.setBackground(d);
 						}
+
 						for(String str : originPath){
 							Log.i("origin", str);
 						}

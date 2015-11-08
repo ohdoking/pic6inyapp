@@ -14,11 +14,13 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -53,6 +55,9 @@ public class PicMainActivity extends Activity {
     ArrayList<String> arrayList;
     ArrayList<Integer> arraySelect;
     ImageView[] imageView;
+    FrameLayout[] frameLayout;
+    ImageView[] foreImg;
+    TextView[] imageText;
 
     CheckBox allPhotoCb;
 
@@ -132,20 +137,28 @@ public class PicMainActivity extends Activity {
         arrayList = new ArrayList<String>();
          arraySelect = mAdapter.getSelectList();
 
+        frameLayout = new FrameLayout[newPictureList.size()];
         imageView = new ImageView[newPictureList.size()];
+        foreImg = new ImageView[newPictureList.size()];
+        imageText = new TextView[newPictureList.size()];
 
-        tvCount.setText(String.valueOf(newPictureList.size())+"장의 사진 중 " + String.valueOf(newPictureList.size()) + "장 선택");
+        tvCount.setText(String.valueOf(newPictureList.size()) + "장의 사진 중 " + String.valueOf(newPictureList.size()) + "장 선택");
 //        tvCount.setText(String.valueOf(newPictureList.size()) + " - " + String.valueOf(newPictureList.size()) + "!");
         for (int i = 0; i < newPictureList.size(); i++) {
             final int index;
             index = i;
 
+            frameLayout[i] = new FrameLayout(this);
+            FrameLayout.LayoutParams lpf = new FrameLayout.LayoutParams(220, 220);
+            lpf.setMargins(0,0,80,0);
+
+            frameLayout[i].setLayoutParams(lpf);
+//
+
             imageView[i] = new ImageView(this);
 
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(220, 220);
-            lp.setMargins(0,0,40,0);
 
-            imageView[i].setLayoutParams(lp);
+
 //            LinearLayout.LayoutParams tp = new LinearLayout.LayoutParams(
 //                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 //            imageView[0].setColorFilter(Color.BLUE);
@@ -163,8 +176,17 @@ public class PicMainActivity extends Activity {
 
 
             imageView[i].setImageBitmap(resized);
-            layout.addView(imageView[i]);
+            frameLayout[i].addView(imageView[i]);
 
+            foreImg[i] = new ImageView(this);
+            frameLayout[i].addView(foreImg[i]);
+
+            imageText[i] = new TextView(this);
+            imageText[i].setGravity(Gravity.CENTER);
+            imageText[i].setTextColor(Color.parseColor("#363636"));
+            frameLayout[i].addView(imageText[i]);
+
+            layout.addView(frameLayout[i]);
 
             //  imageView[i].setPadding(100,100,100,100);
 ///            layout.addView(textView[i]);
@@ -179,7 +201,8 @@ public class PicMainActivity extends Activity {
                 }
             }
 
-            imageView[index].setColorFilter(Color.CYAN);
+            foreImg[index].setImageResource(R.mipmap.check_shadow);
+            imageView[index].setColorFilter(Color.TRANSPARENT);
 
             imageView[index].setOnClickListener(new View.OnClickListener() {
 
@@ -187,12 +210,15 @@ public class PicMainActivity extends Activity {
                     allPhotoCb.setChecked(false);
 
                     if (arraySelect.get(index) == 0) {//&& !arrayList.contains(index)) {
-                        imageView[index].setColorFilter(Color.CYAN);
+//                        imageView[index].setColorFilter(Color.CYAN);
+                        foreImg[index].setImageResource(R.mipmap.check_shadow);
+                        imageView[index].setColorFilter(Color.TRANSPARENT);
                         arraySelect.set(index, 1);
                         mAdapter.setTempImagePath(index);
                         arrayList.add(String.valueOf(index));
 
                     } else {
+                        foreImg[index].setImageResource(0);
                         imageView[index].setColorFilter(Color.TRANSPARENT);
                         // selected = 0;
                         arraySelect.set(index, 0);
@@ -275,30 +301,8 @@ public class PicMainActivity extends Activity {
             @Override
             public void onClick(View v) {
 //                finish();
-                ArrayList<String> moveList = mAdapter.getRealImagePathList();
-                ArrayList<String> originList = mAdapter.getOriginImagePathList();
-                for (int i = 0;i < moveList.size();i++){
-//                    String s = gh.STRSAVEPATH+"/a/myApp.PNG";
-                    String imagePath = originList.get(i).toString();
-                    String movePath = moveList.get(i).toString();
-                    File orginFile = new File(imagePath);
-                    File moveFile = new File(movePath);
-                    if(!imagePath.equals(movePath)){
+                closeAndSave();
 
-                        Log.i("ohdoking", imagePath + " -> " + movePath + "/" + orginFile.getName());
-
-                        if(!imagePath.equals(movePath +"/"+ orginFile.getName())){
-                            gh.fileUMove(imagePath, movePath + "/" + orginFile.getName());
-                        }
-
-                    }
-                    else{
-                        Log.i("ohdoking","same");
-                    }
-
-//                    gh.fileUMove(imagePath,imagePath+"/"+f.getName());
-                }
-                finish();
             }
 
         });
@@ -335,7 +339,10 @@ public class PicMainActivity extends Activity {
                         mAdapter.getRealImagePathList().set(imagePath, gh.TRASHPATH);
                         Log.i("integer", String.valueOf(imagePath));
 
-                        imageView[imagePath].setColorFilter(Color.RED);
+                        imageView[imagePath].setColorFilter(Color.parseColor("#99999999"));
+                        foreImg[imagePath].setImageResource(0);
+                        imageView[imagePath].setColorFilter(Color.TRANSPARENT);
+                        imageText[imagePath].setText("휴지통");
                     }
                     for(String str : mAdapter.getOriginImagePathList()){
                         Log.i("origin", str);
@@ -394,7 +401,9 @@ public class PicMainActivity extends Activity {
                             arraySelect.set(indexSelect, 1);
                             mAdapter.setTempImagePath(index);
                             arrayList.add(String.valueOf(indexSelect));
-                            imageView[indexSelect].setColorFilter(Color.CYAN);
+                            //imageView[indexSelect].setColorFilter(Color.CYAN);
+                            foreImg[indexSelect].setImageResource(R.mipmap.check_shadow);
+                            imageView[indexSelect].setColorFilter(Color.TRANSPARENT);
                         }
                         index = index+1;
                     }
@@ -406,6 +415,7 @@ public class PicMainActivity extends Activity {
                             mAdapter.removeTempImagePath(index);
                             arraySelect.set(indexSelect, 0);
                             arrayList.clear();
+                            foreImg[indexSelect].setImageResource(0);
                             imageView[indexSelect].setColorFilter(Color.TRANSPARENT);
                         }
                     }
@@ -515,6 +525,7 @@ public class PicMainActivity extends Activity {
                 swipeYup = event.getY();
                 float deltaY = swipeYup - swipeYdown;
                     if (Math.abs(deltaY) > MIN_SWIPE_DISTANCE) {
+
                         if (!swipeMode) {
                             swipeMode = true;
                             if (swipeYdown < swipeYup) { // 처음 터치한 Y값이 나중에 터치한 Y값보다 위이므로 swipe down
@@ -538,7 +549,8 @@ public class PicMainActivity extends Activity {
                                     });
                                 }
                             }, 0, 1);
-                        } else { // swipe up
+                        }
+                        else { // swipe up
                             timer = new Timer();
                             timer.schedule(new TimerTask() {
                                 @Override
@@ -561,6 +573,20 @@ public class PicMainActivity extends Activity {
                             }, 0, 1);
                         }
                     }
+
+                }
+                    // 빈공간 클릭
+                else{
+                        /*long tempTime = System.currentTimeMillis();
+                        long intervalTime = tempTime - backPressedTime;
+
+                        if (0 <= intervalTime && FINSH_INTERVAL_TIME >= intervalTime) {
+                            closeAndSave();
+                        } else {
+                            backPressedTime = tempTime;
+                            Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+                        }
+                        */
                 }
                 break;
         }
@@ -574,11 +600,40 @@ public class PicMainActivity extends Activity {
 
         if (0 <= intervalTime && FINSH_INTERVAL_TIME >= intervalTime) {
             super.onBackPressed();
+            closeAndSave();
         } else {
             backPressedTime = tempTime;
             String str = getResources().getString(R.string.close_order);
             Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    void closeAndSave(){
+        ArrayList<String> moveList = mAdapter.getRealImagePathList();
+        ArrayList<String> originList = mAdapter.getOriginImagePathList();
+        for (int i = 0;i < moveList.size();i++){
+//                    String s = gh.STRSAVEPATH+"/a/myApp.PNG";
+            String imagePath = originList.get(i).toString();
+            String movePath = moveList.get(i).toString();
+            File orginFile = new File(imagePath);
+            File moveFile = new File(movePath);
+            if(!imagePath.equals(movePath)){
+
+                Log.i("ohdoking", imagePath + " -> " + movePath + "/" + orginFile.getName());
+
+                if(!imagePath.equals(movePath +"/"+ orginFile.getName())){
+                    gh.fileUMove(imagePath, movePath + "/" + orginFile.getName());
+                }
+
+            }
+            else{
+                Log.i("ohdoking","same");
+            }
+
+//                    gh.fileUMove(imagePath,imagePath+"/"+f.getName());
+        }
+        finish();
     }
 
 }

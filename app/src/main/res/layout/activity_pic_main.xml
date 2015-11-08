@@ -22,20 +22,19 @@
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.1"
+                android:layout_marginTop="10dp"
+                android:layout_height="20dp"
+                android:layout_weight="0.2"
                 android:src="@mipmap/logo" />
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.1" />
+
 
             <TextView
                 android:id="@+id/tv_photo_count"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.6"
+                android:textColor="#363636"
                 android:gravity="center"
                 android:text="0장의 사진 중 0장 선택"
                 android:textSize="18sp" />
@@ -43,7 +42,7 @@
             <Button
                 android:id="@+id/btn_setting"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="20dp"
                 android:layout_weight="0.1"
                 android:layout_marginRight="15dp"
                 android:background="@mipmap/ic_setting" />
@@ -51,9 +50,9 @@
             <Button
                 android:id="@+id/btn_close"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="20dp"
                 android:layout_weight="0.1"
-                android:background="@mipmap/ic_close_black_36dp" />
+                android:background="@mipmap/ic_x" />
 
         </LinearLayout>
         <HorizontalScrollView
@@ -67,7 +66,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
-                android:background="@color/ripple_material_light"
                 android:orientation="horizontal"/>
 
         </HorizontalScrollView>
@@ -93,6 +91,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7"
+                    android:textColor="#363636"
                     android:text="전체 선택" />
 
                 <Button

@@ -89,13 +89,13 @@ public class PicSettingsActivity extends PreferenceActivity {
 
         PreferenceManager preferenceManager = getPreferenceManager();
 
-        //Ã¹¹æ¹® Ã¼Å©
-
+        //ì²«ë°©ë¬¸ ì²´í¬
         if(getPreferences().isEmpty()){
             startService(new Intent(this, FifthService.class));
             Toast.makeText(this,
                     "NewOn", Toast.LENGTH_LONG).show();
 //            saveNewVisit(this,"1");
+
         }
 
         if (getPreferences().equals("OFF") || getPreferences().isEmpty()) {
@@ -143,7 +143,7 @@ public class PicSettingsActivity extends PreferenceActivity {
         editor.commit();
     }
 
-    // °ª ºÒ·¯¿À±â
+    // ê°’ ë¶ˆëŸ¬ì˜¤ê¸°
     private String getPreferences() {
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         return pref.getString("popup", "");
@@ -156,7 +156,7 @@ public class PicSettingsActivity extends PreferenceActivity {
         editor.commit();
     }
 
-    // °ª ºÒ·¯¿À±â
+    // ê°’ ë¶ˆëŸ¬ì˜¤ê¸°
     private String getNewVisit() {
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         return pref.getString("visit", "");

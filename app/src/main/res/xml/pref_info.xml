@@ -5,7 +5,7 @@
             android:summary="개발자 정보를 확인합니다"
             android:title="개발자 정보">
             <intent
-                android:targetClass="com.yapp.pic6.picproject.PicMainActivity"
+                android:targetClass="com.yapp.pic6.picproject.DeveloperInfoActivity"
                 android:targetPackage="com.yapp.pic6.picproject" />
         </Preference>
         <Preference
