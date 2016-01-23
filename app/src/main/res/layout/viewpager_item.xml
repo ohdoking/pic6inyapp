@@ -11,11 +11,11 @@
 
         android:layout_marginLeft="32dp"
         android:layout_marginTop="53dp"
-        android:lineSpacingExtra="48px"
         android:textSize="75px"
         android:textColor="#009688"
 
-       />
+
+        />
 
     <ImageView
         android:layout_width="296.33dp"

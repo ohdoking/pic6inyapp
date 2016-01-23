@@ -110,7 +110,7 @@ public class DialogTestActivity extends Activity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(DialogTestActivity.this);
-                alert.setTitle(R.string.new_album);
+//                alert.setTitle(R.string.new_album);
 //                alert.setMessage("Pls input Album's Name");
 
                 // Create EditText for entry
@@ -126,7 +126,7 @@ public class DialogTestActivity extends Activity {
                 alert.setView(layout);
 
                 // Make an "OK" button to save the name
-                alert.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                alert.setPositiveButton(R.string.new_album_confirm, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
 
@@ -146,7 +146,7 @@ public class DialogTestActivity extends Activity {
 
                 // Make a "Cancel" button
                 // that simply dismisses the alert
-                alert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                alert.setNegativeButton(R.string.new_album_cancel, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {}
                 });

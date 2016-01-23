@@ -15,6 +15,7 @@ import android.preference.SwitchPreference;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.tsengvn.typekit.TypekitContextWrapper;
 import com.yapp.pic6.picproject.service.FifthService;
 
 import java.util.List;
@@ -31,6 +32,8 @@ import java.util.List;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class PicSettingsActivity extends PreferenceActivity {
+
+
     /**
      * Determines whether to always show the simplified settings UI, where
      * settings are presented in a single list. When false, settings are shown
@@ -39,13 +42,16 @@ public class PicSettingsActivity extends PreferenceActivity {
      */
     private static final boolean ALWAYS_SIMPLE_PREFS = false;
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
         setupSimplePreferencesScreen();
-//        startService(new Intent(PicSettingsActivity.this, FifthService.class));
     }
 
     /**
@@ -53,6 +59,8 @@ public class PicSettingsActivity extends PreferenceActivity {
      * device configuration dictates that a simplified, single-pane UI should be
      * shown.
      */
+
+
     private void setupSimplePreferencesScreen() {
         if (!isSimplePreferences(this)) {
             return;
@@ -70,7 +78,7 @@ public class PicSettingsActivity extends PreferenceActivity {
 //        fakeHeader = new PreferenceCategory(this);
         addPreferencesFromResource(R.xml.pref_title);
         addPreferencesFromResource(R.xml.pref_general);
-        addPreferencesFromResource(R.xml.pref_info);
+//        addPreferencesFromResource(R.xml.pref_info);
 
 //        addPreferencesFromResource(R.xml.pref_notification);
 
@@ -92,8 +100,8 @@ public class PicSettingsActivity extends PreferenceActivity {
         //첫방문 체크
         if(getPreferences().isEmpty()){
             startService(new Intent(this, FifthService.class));
-            Toast.makeText(this,
-                    "NewOn", Toast.LENGTH_LONG).show();
+            /*Toast.makeText(this,
+                    "NewOn", Toast.LENGTH_LONG).show();*/
 //            saveNewVisit(this,"1");
 
         }

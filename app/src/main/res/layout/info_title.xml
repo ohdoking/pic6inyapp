@@ -26,7 +26,7 @@
         android:gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="22dp"
-        android:text="쉽고 빠른 사진 정리"/>
+        android:text="@string/setting_description"/>
 
     <ImageView
         android:layout_height="fill_parent"

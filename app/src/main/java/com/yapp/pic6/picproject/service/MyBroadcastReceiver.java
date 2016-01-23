@@ -80,19 +80,35 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         ActivityManager actMng = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
 
         List<ActivityManager.RunningAppProcessInfo> list = actMng.getRunningAppProcesses();
+        ArrayList<String> cameraLists = new ArrayList<String>();
 
-        for(ActivityManager.RunningAppProcessInfo rap : list)
-        {
-            if(rap.processName.contains("camera"))
-            {
-                isRunning = true;
-                break;
-            } else {
-                isRunning = false;
-                break;
+        cameraLists.add("camera");// 기본
+        cameraLists.add("media");// 미디어
+        cameraLists.add("b612");//b612
+        cameraLists.add("gpulumera");//캔디 카메라
+        cameraLists.add("SilentCamera");//조용한 카메라
+        cameraLists.add("Camera360");//360 카메라
+        cameraLists.add("photowonder");//photowonder
+        cameraLists.add("retrica");//retrica
+        cameraLists.add("selfiecamera");//selfiecamera
+        cameraLists.add("aiemra");//aiemra
+        cameraLists.add("cyworld");//cyworld
+
+        ActivityManager.RunningAppProcessInfo rap = list.get(0);
+//        for(ActivityManager.RunningAppProcessInfo rap : list)
+//         {
+        Log.i("ohdoking",rap.processName);
+
+            for(String s:cameraLists) {
+//                Log.i("ohdoking",rap.processName + " == " + s  + "// result : "+rap.processName.contains(s));
+                if (rap.processName.contains(s)) {
+                    isRunning = true;
+                    break;
+                } else {
+                    isRunning = false;
+                }
             }
-        }
-
+//        }
         return isRunning;
     }
 

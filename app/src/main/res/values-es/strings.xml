@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">PicProject</string>
+    <string name="title_activity_dialog_test">DialogMainActivity</string>
+    <string name="title_activity_dialog_main">DialogMainActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_add">AddActivity</string>
+    <string name="title_activity_grid_acitivy">GridAcitivy</string>
+    <string name="title_activity_setting_pic">SettingPicActivity</string>
+    <string name="title_activity_tutorial">TutorialActivity</string>
+    <string name="title_activity_developer_info">DeveloperInfoActivity</string>
+
+
+<!--    <string name="new_album">새앨범 추가</string>
+
+    <string name="ok">확인</string>
+    <string name="cancel">취소</string>
+    <string name="create_folder_content"> 앨범이 생성 되었습니다.</string>
+    <string name="already_exist">이미 해당 이름의 앨범이 존재합니다.</string>
+    <string name="close_order">한 번 더 누르시면 종료됩니다.</string>
+
+    <string name="newfolder">앨범 추가</string>-->
+    <string name="title_activity_finish_test">FinishTestActivity</string>
+    <string name="title_activity_pic_main">PicMainActivity</string>
+    <string name="title_activity_photo_view">PhotoViewActivity</string>
+
+
+    <!--국제 화를 위한 네이밍-->
+    <string name="trash">Trash</string>
+
+    <string name="main_select_all">Seleccionar todo</string>
+    <string name="main_select_of" formatted="false"> de %d seleccionados</string>
+    <string name="main_moved" formatted="false">  foto(s) se ha(n) movido a \'%s\'</string>
+    <string name="main_please_select">Seleccionar foto</string>
+    <string name="main_close">Presione una vez más para cerrar</string>
+    <string name="main_trash"> foto(s) se ha(n) movido a Trash</string>
+    <string name="share_title">Compartir</string>
+
+    <string name="new_album_title">Nuevo álbum</string>
+    <string name="new_album_cancel">Cancelar</string>
+    <string name="new_album_confirm">Aceptar</string>
+    <string name="new_album_done">El álbum se ha creado</string>
+    <string name="new_album_error_same">El nombre del archivo ya existe</string>
+    <string name="new_album_error_no_name">Entrar un nombre del álbum, por favor</string>
+    <string name="new_album_hint">Entrar un nombre del álbum, por favor</string>
+
+    <string name="setting_title">Ajustes</string>
+    <string name="setting_description">Gestión rápida y fácil de fotos</string>
+    <string name="setting_on_off">Establecer Pic si se debe ejecutar o no</string>
+    <string name="setting_tutorial">Tutorial</string>
+    <string name="setting_ask">Ayuda</string>
+    <string name="setting_send_mail">Enviar un correo electrónico al programador</string>
+    <string name="setting_made_by">Creador</string>
+    <string name="tutorial_no_1">When you take or \ndownload a picture, \npop-up is appeared</string>
+    <string name="tutorial_no_2">Select a picture and</string>
+    <string name="tutorial_no_3">clicking on it will move the selected photo album</string>
+    <string name="tutorial_no_4">You can share directly \nor delete the selected \npictures.</string>
+    <string name="tutorial_no_5">When picture is long-pressed, \nit is enlarged</string>
+    <string name="madeby_title">Creador</string>
+    <string name="madeby_plan">Planificador</string>
+    <string name="madeby_design">Diseñador</string>
+    <string name="madeby_develop">Programador</string>
+
+    <string name="jsi">Sangin Chun</string>
+    <string name="khj">Hyunjung Kim</string>
+    <string name="kgh">Gahyun Kim</string>
+    <string name="pth">Taeho Park</string>
+    <string name="odk">Dokeun Oh</string>
+
+
+</resources>

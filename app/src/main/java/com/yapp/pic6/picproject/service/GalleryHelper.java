@@ -196,7 +196,10 @@ public class GalleryHelper {
                 Log.i("ListingImages", " bucket=" + bucket
                         + "  date_taken=" + date
                         + "  _data=" + data);
-                arr.add(gallery);
+
+                if(!gallery.getName().equals("Trash")){
+                    arr.add(gallery);
+                }
             } while (cur.moveToNext());
         }
 
@@ -276,8 +279,8 @@ public class GalleryHelper {
                 outStream.flush();
                 outStream.close();
                 addMedia(context, file);
-                String str = context.getResources().getString(R.string.create_folder_content);
-                Toast.makeText(context, dir_path + str, Toast.LENGTH_LONG).show();
+                String str = context.getResources().getString(R.string.new_album_done);
+                Toast.makeText(context, dir_path + " " +str, Toast.LENGTH_LONG).show();
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -285,7 +288,7 @@ public class GalleryHelper {
                 e.printStackTrace();
             }
         }else{
-            String str = context.getResources().getString(R.string.already_exist);
+            String str = context.getResources().getString(R.string.new_album_error_same);
             Toast.makeText(context,str,Toast.LENGTH_SHORT).show();
         }
         return dir;
@@ -330,7 +333,7 @@ public class GalleryHelper {
 
         fileUMove((inFileName), (TRASHPATH + fileName));
         Log.i("ss",inFileName+"//"+TRASHPATH+fileName);
-        Toast.makeText(context, "Move Trash", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, "Move Trash", Toast.LENGTH_SHORT).show();
     }
 
     //file delete

@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">PicProject</string>
+    <string name="title_activity_dialog_test">DialogMainActivity</string>
+    <string name="title_activity_dialog_main">DialogMainActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_add">AddActivity</string>
+    <string name="title_activity_grid_acitivy">GridAcitivy</string>
+    <string name="title_activity_setting_pic">SettingPicActivity</string>
+    <string name="title_activity_tutorial">TutorialActivity</string>
+    <string name="title_activity_developer_info">DeveloperInfoActivity</string>
+
+
+<!--    <string name="new_album">새앨범 추가</string>
+
+    <string name="ok">확인</string>
+    <string name="cancel">취소</string>
+    <string name="create_folder_content"> 앨범이 생성 되었습니다.</string>
+    <string name="already_exist">이미 해당 이름의 앨범이 존재합니다.</string>
+    <string name="close_order">한 번 더 누르시면 종료됩니다.</string>
+
+    <string name="newfolder">앨범 추가</string>-->
+    <string name="title_activity_finish_test">FinishTestActivity</string>
+    <string name="title_activity_pic_main">PicMainActivity</string>
+    <string name="title_activity_photo_view">PhotoViewActivity</string>
+
+
+    <!--국제 화를 위한 네이밍-->
+    <string name="trash">휴지통</string>
+
+    <string name="main_select_all">전체 선택</string>
+    <string name="main_select_of" formatted="false"> 장의 사진 중 %d 장 선택</string>
+    <string name="main_moved" formatted="false"> 장의 사진이 \'%s\'로 이동되었습니다</string>
+    <string name="main_please_select">사진을 선택해주세요</string>
+    <string name="main_close">한 번 더 누르시면 종료됩니다</string>
+    <string name="main_trash">장의 사진이 휴지통으로 이동되었습니다</string>
+    <string name="share_title">공유</string>
+
+    <string name="new_album_title">새 앨범 추가</string>
+    <string name="new_album_cancel">취소</string>
+    <string name="new_album_confirm">확인</string>
+    <string name="new_album_done">앨범이 생성되었습니다</string>
+    <string name="new_album_error_same">이미 해당 이름의 앨범이 존재합니다.</string>
+    <string name="new_album_error_no_name">앨범명을 입력하세요</string>
+    <string name="new_album_hint">앨범명을 입력하세요.</string>
+
+    <string name="setting_title">환경설정</string>
+    <string name="setting_description">쉽고 빠른 사진 정리</string>
+    <string name="setting_on_off">Pic 실행 여부를 설정합니다.</string>
+    <string name="setting_tutorial">튜토리얼</string>
+    <string name="setting_ask">문의</string>
+    <string name="setting_send_mail">개발자에게 메일을 보냅니다</string>
+    <string name="setting_made_by">만든 사람</string>
+    <string name="tutorial_no_1">사진을 찍거나 \n다운로드 받으면 \n팝업이 나타납니다</string>
+    <string name="tutorial_no_2">사진을 선택하고</string>
+    <string name="tutorial_no_3">앨범을 클릭하면 \n선택된 사진이 이동됩니다</string>
+    <string name="tutorial_no_4">선택된 사진을 바로 \n공유하거나 삭제할 수 \n있습니다</string>
+    <string name="tutorial_no_5">사진을 길게 누르면 \n확대됩니다</string>
+    <string name="madeby_title">만든 사람</string>
+    <string name="madeby_plan">기획</string>
+    <string name="madeby_design">디자인</string>
+    <string name="madeby_develop">개발</string>
+
+    <string name="jsi">전상인</string>
+    <string name="khj">김현정</string>
+    <string name="kgh">김가현</string>
+    <string name="pth">박태호</string>
+    <string name="odk">오도근</string>
+
+
+</resources>

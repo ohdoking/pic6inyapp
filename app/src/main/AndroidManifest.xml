@@ -14,7 +14,8 @@
         android:allowBackup="true"
         android:icon="@mipmap/systemicon_logo"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:name = "com.yapp.pic6.picproject.PicApplication">
         <activity
             android:name=".DialogTestActivity"
             android:exported="true"
@@ -32,6 +33,7 @@
             android:name=".PicSettingsActivity"
             android:theme="@style/PreferencesTheme"
             android:label="@string/title_activity_pic_settings" >
+            <!--android:theme="@style/PreferencesTheme"-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -71,7 +73,8 @@
         </activity>
         <activity
             android:name=".DeveloperInfoActivity"
-            android:label="@string/title_activity_developer_info" >
+            android:label="@string/title_activity_developer_info"
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
             android:name=".FinishTestActivity"

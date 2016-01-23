@@ -1,6 +1,5 @@
 package com.yapp.pic6.picproject;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +16,8 @@ import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -37,7 +38,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class PicMainActivity extends Activity {
+public class PicMainActivity extends BaseActivity {
 
     CardAdapter mAdapter;
     RecyclerView mRecyclerView;
@@ -61,7 +62,7 @@ public class PicMainActivity extends Activity {
 
     CheckBox allPhotoCb;
 
-    ArrayList<String> newPictureList ;
+    ArrayList<String> newPictureList;
 
     GalleryHelper gh;
 
@@ -81,36 +82,35 @@ public class PicMainActivity extends Activity {
     private final long FINSH_INTERVAL_TIME = 3000;
     private long backPressedTime = 0;
 
+    boolean add_client_error;
+
     int num;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.anim_layoutup, R.anim.anim_none);
         setContentView(R.layout.activity_pic_main);
 
-
-
         num = 0;
 
         gh = new GalleryHelper(PicMainActivity.this);
 
-
         File file = new File(gh.TRASHPATH);
-        if(!file.exists() && !file.isDirectory()){
+        if (!file.exists() && !file.isDirectory()) {
             gh.makeDirectory("Trash");
         }
-
 
         getId();
         clickevent();
 
         // The number of Columns
-        final GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(),3);
+        final GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 3);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 
         items = gh.getGallery();
-        mAdapter = new CardAdapter(getApplicationContext(),items);
+        mAdapter = new CardAdapter(getApplicationContext(), items);
         mRecyclerView.setAdapter(mAdapter);
 
         mAdapter.setArray(gh.newPicture());
@@ -135,14 +135,16 @@ public class PicMainActivity extends Activity {
         };*/
 
         arrayList = new ArrayList<String>();
-         arraySelect = mAdapter.getSelectList();
+        arraySelect = mAdapter.getSelectList();
 
         frameLayout = new FrameLayout[newPictureList.size()];
         imageView = new ImageView[newPictureList.size()];
         foreImg = new ImageView[newPictureList.size()];
         imageText = new TextView[newPictureList.size()];
 
-        tvCount.setText(String.valueOf(newPictureList.size()) + "장의 사진 중 " + String.valueOf(newPictureList.size()) + "장 선택");
+//        tvCount.setText(String.valueOf(newPictureList.size()) + "장의 사진 중 " + String.valueOf(newPictureList.size()) + "장 선택");
+        tvCount.setText(newPictureList.size() + " " + getResources().getString(R.string.main_select_of, newPictureList.size()));
+
 //        tvCount.setText(String.valueOf(newPictureList.size()) + " - " + String.valueOf(newPictureList.size()) + "!");
         for (int i = 0; i < newPictureList.size(); i++) {
             final int index;
@@ -150,13 +152,12 @@ public class PicMainActivity extends Activity {
 
             frameLayout[i] = new FrameLayout(this);
             FrameLayout.LayoutParams lpf = new FrameLayout.LayoutParams(220, 220);
-            lpf.setMargins(0,0,80,0);
+            lpf.setMargins(0, 0, 80, 0);
 
             frameLayout[i].setLayoutParams(lpf);
 //
 
             imageView[i] = new ImageView(this);
-
 
 
 //            LinearLayout.LayoutParams tp = new LinearLayout.LayoutParams(
@@ -168,9 +169,9 @@ public class PicMainActivity extends Activity {
 
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 4;
-    //		options.inJustDecodeBounds = true;
-            final Bitmap bitmapImage = BitmapFactory.decodeFile(newPictureList.get(i),options);
-            if(bitmapImage != null){
+            //		options.inJustDecodeBounds = true;
+            final Bitmap bitmapImage = BitmapFactory.decodeFile(newPictureList.get(i), options);
+            if (bitmapImage != null) {
                 resized = Bitmap.createScaledBitmap(bitmapImage, 500, 500, true);
             }
 
@@ -195,8 +196,8 @@ public class PicMainActivity extends Activity {
             arraySelect.add(i, 1);
             mAdapter.setTempImagePath(i);
             num = 0;
-            for(Integer j:arraySelect){
-                if(j==1){
+            for (Integer j : arraySelect) {
+                if (j == 1) {
                     ++num;
                 }
             }
@@ -240,7 +241,8 @@ public class PicMainActivity extends Activity {
                     }
 
 
-                    tvCount.setText(String.valueOf(newPictureList.size()) + "장의 사진 중 " + String.valueOf(num) + "장 선택 ");
+//                    tvCount.setText(String.valueOf(newPictureList.size()) + "장의 사진 중 " + String.valueOf(num) + "장 선택 ");
+                    tvCount.setText(newPictureList.size() + " " + getResources().getString(R.string.main_select_of, num));
 //                    tvCount.setText(String.valueOf(newPictureList.size()) + " -  "+String.valueOf(num)+"! ");
 
 
@@ -250,7 +252,7 @@ public class PicMainActivity extends Activity {
             imageView[index].setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    Intent i = new Intent(PicMainActivity.this,PhotoViewActivity.class);
+                    Intent i = new Intent(PicMainActivity.this, PhotoViewActivity.class);
                     i.putExtra("event_name", bitmapImage);
                     startActivity(i);
 
@@ -259,11 +261,12 @@ public class PicMainActivity extends Activity {
             });
 
         }
-        if (arraySelect.indexOf(0) == -1){
+        if (arraySelect.indexOf(0) == -1) {
             allPhotoCb.setChecked(true);
         }
 
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -276,41 +279,48 @@ public class PicMainActivity extends Activity {
         overridePendingTransition(R.anim.anim_none, R.anim.anim_layoutdown);
     }
 
-    public void getId(){
+    public void getId() {
 
-        mRecyclerView = (RecyclerView)findViewById(R.id.recycler_view);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
-        closeBtn = (Button)findViewById(R.id.btn_close);
-        settingBtn = (Button)findViewById(R.id.btn_setting);
-        trashBtn = (Button)findViewById(R.id.btn_trash);
-        shareBtn = (Button)findViewById(R.id.btn_share);
-        addFolderBtn = (Button)findViewById(R.id.btn_add_folder);
+        closeBtn = (Button) findViewById(R.id.btn_close);
+        settingBtn = (Button) findViewById(R.id.btn_setting);
+        trashBtn = (Button) findViewById(R.id.btn_trash);
+        shareBtn = (Button) findViewById(R.id.btn_share);
+        addFolderBtn = (Button) findViewById(R.id.btn_add_folder);
 
-        tvCount = (TextView)findViewById(R.id.tv_photo_count);
+        tvCount = (TextView) findViewById(R.id.tv_photo_count);
 
-        allPhotoCb = (CheckBox)findViewById(R.id.cb_all_photo);
+        allPhotoCb = (CheckBox) findViewById(R.id.cb_all_photo);
 
-        wrap = (LinearLayout)findViewById(R.id.wrap);
+        wrap = (LinearLayout) findViewById(R.id.wrap);
 
         layout = (LinearLayout) findViewById(R.id.layout);
         scrollView = (HorizontalScrollView) findViewById(R.id.horizontalScrollView);
     }
 
-    public void clickevent(){
+    public void clickevent() {
+
+        final Animation anim_bigtosmall = AnimationUtils.loadAnimation(this, R.anim.anim_bigtosmall);
+
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                closeBtn.startAnimation(anim_bigtosmall);
 //                finish();
                 closeAndSave();
+
 
             }
 
         });
         settingBtn.setOnClickListener(new View.OnClickListener() {
             int i = 0;
+
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(PicMainActivity.this,PicSettingsActivity.class);
+                settingBtn.startAnimation(anim_bigtosmall);
+                Intent i = new Intent(PicMainActivity.this, PicSettingsActivity.class);
                 startActivity(i);
                 finish();
 
@@ -322,6 +332,7 @@ public class PicMainActivity extends Activity {
                     mAdapter.removeTempImagePath(0);
                     i = 0;
                 }*/
+
             }
         });
         trashBtn.setOnClickListener(new View.OnClickListener() {
@@ -330,12 +341,18 @@ public class PicMainActivity extends Activity {
                 /*gh.moveTrash(gh.STRSAVEPATH + "/e/myApp.PNG");
                 refresh();*/
 
-
+                trashBtn.startAnimation(anim_bigtosmall);
                 //비었을때
-                if(mAdapter.getTempImagePathList().isEmpty()){
-                }
-                else{
-                    for(Integer imagePath :mAdapter.getTempImagePathList()){
+                if (mAdapter.getTempImagePathList().isEmpty()) {
+
+                    Toast.makeText(getApplicationContext(), R.string.main_please_select, Toast.LENGTH_SHORT).show();
+                } else {
+//                    Toast.makeText(getApplicationContext(), mAdapter.getTempImagePathList().size() + " 장의 사진이 휴지통으로 이동되었습니다 ", Toast.LENGTH_SHORT).show();
+                    Log.i("ohdoking", "ohdokingCheck");
+
+                    String message = getResources().getString(R.string.main_trash);
+                    Toast.makeText(getApplicationContext(), mAdapter.getTempImagePathList().size() + message, Toast.LENGTH_SHORT).show();
+                    for (Integer imagePath : mAdapter.getTempImagePathList()) {
                         mAdapter.getRealImagePathList().set(imagePath, gh.TRASHPATH);
                         Log.i("integer", String.valueOf(imagePath));
 
@@ -343,15 +360,16 @@ public class PicMainActivity extends Activity {
                         foreImg[imagePath].setImageResource(0);
                         imageView[imagePath].setColorFilter(Color.TRANSPARENT);
                         imageText[imagePath].setText("휴지통");
+//                        imageText[imagePath].setText(R.string.trash);
                     }
-                    for(String str : mAdapter.getOriginImagePathList()){
+                    for (String str : mAdapter.getOriginImagePathList()) {
                         Log.i("origin", str);
                     }
-                    for(String str : mAdapter.getRealImagePathList()){
-                        Log.i("move",str);
+                    for (String str : mAdapter.getRealImagePathList()) {
+                        Log.i("move", str);
                     }
-                    for(int j = 0 ;j < arraySelect.size();j++){
-                        arraySelect.set(j,0);
+                    for (int j = 0; j < arraySelect.size(); j++) {
+                        arraySelect.set(j, 0);
                     }
                     mAdapter.getTempImagePathList().clear();
                 }
@@ -360,14 +378,14 @@ public class PicMainActivity extends Activity {
         shareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                shareBtn.startAnimation(anim_bigtosmall);
                 //비었을때
-                if(mAdapter.getTempImagePathList().isEmpty()){
-                    Toast.makeText(getApplicationContext(), "공유할 사진을 선택해주세요 ", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                if (mAdapter.getTempImagePathList().isEmpty()) {
+//                    Toast.makeText(getApplicationContext(), "사진을 선택해주세요 ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.main_please_select, Toast.LENGTH_SHORT).show();
+                } else {
                     ArrayList<String> tempShare = new ArrayList<String>();
-                    for(Integer imagePath :mAdapter.getTempImagePathList()){
+                    for (Integer imagePath : mAdapter.getTempImagePathList()) {
                         mAdapter.getRealImagePathList().set(imagePath, gh.TRASHPATH);
                         Log.i("integer", String.valueOf(imagePath));
 
@@ -383,7 +401,7 @@ public class PicMainActivity extends Activity {
         addFolderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                addFolderBtn.startAnimation(anim_bigtosmall);
                 addFolderDialog();
                 refresh();
             }
@@ -405,7 +423,7 @@ public class PicMainActivity extends Activity {
                             foreImg[indexSelect].setImageResource(R.mipmap.check_shadow);
                             imageView[indexSelect].setColorFilter(Color.TRANSPARENT);
                         }
-                        index = index+1;
+                        index = index + 1;
                     }
                 } else {
                     int index = 0;
@@ -419,38 +437,38 @@ public class PicMainActivity extends Activity {
                             imageView[indexSelect].setColorFilter(Color.TRANSPARENT);
                         }
                     }
-                    index = index+1;
+                    index = index + 1;
                 }
                 num = 0;
-                for(Integer j:arraySelect){
-                    if(j==1){
+                for (Integer j : arraySelect) {
+                    if (j == 1) {
                         ++num;
                     }
                 }
 
 //                tvCount.setText(String.valueOf(newPictureList.size()) + " -  " + String.valueOf(num) + "! ");
-                tvCount.setText(String.valueOf(newPictureList.size()) + "장의 사진 중 " + String.valueOf(num) + "장 선택 ");
+//                tvCount.setText(String.valueOf(newPictureList.size()) + "장의 사진 중 " + String.valueOf(num) + "장 선택 ");
+                tvCount.setText(newPictureList.size() + " " + getResources().getString(R.string.main_select_of, num));
             }
         });
 
     }
 
-    public void addFolderDialog(){
+    public void addFolderDialog() {
         ContextThemeWrapper themedContext;
-        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ) {
-            themedContext = new ContextThemeWrapper( PicMainActivity.this ,R.style.AppTheme );
-        }
-        else {
-            themedContext = new ContextThemeWrapper( PicMainActivity.this, android.R.style.Theme_Light_NoTitleBar );
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            themedContext = new ContextThemeWrapper(PicMainActivity.this, R.style.AppTheme);
+        } else {
+            themedContext = new ContextThemeWrapper(PicMainActivity.this, android.R.style.Theme_Light_NoTitleBar);
         }
         AlertDialog.Builder alert = new AlertDialog.Builder(themedContext);
-        alert.setTitle(R.string.new_album);
+        alert.setTitle(R.string.new_album_title);
 //                alert.setMessage("Pls input Album's Name");
 
         // Create EditText for entry
         final EditText input = new EditText(PicMainActivity.this);
         input.setHint(R.string.new_album_hint);
-        LinearLayout.LayoutParams editLayoutParams = new  LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams editLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         editLayoutParams.setMargins(50, 60, 50, 25);
         input.setLayoutParams(editLayoutParams);
         input.setTextSize(13);
@@ -460,31 +478,57 @@ public class PicMainActivity extends Activity {
         alert.setView(layout);
 
         // Make an "OK" button to save the name
-        alert.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+        alert.setPositiveButton(R.string.new_album_confirm, new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int whichButton) {
 
-                // Grab the EditText's input
-                String inputName = input.getText().toString();
                 // Put it into memory (don't forget to commit!)
                        /* SharedPreferences.Editor e = mSharedPreferences.edit();
                         e.putString(PREF_NAME, inputName);
                         e.commit();*/
 
-                // Welcome the new user
-                gh.makeDirectory(inputName);
+                String inputName = input.getText().toString();
+
+                if (inputName.equals("")) {
+                    Toast.makeText(getApplicationContext(), R.string.new_album_error_no_name, Toast.LENGTH_SHORT).show();
+                    add_client_error = true;
+                } else {
+                    gh.makeDirectory(inputName);
+                    add_client_error = false;
+                }
+
+
             }
         });
 
         // Make a "Cancel" button
         // that simply dismisses the alert
-        alert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+        alert.setNegativeButton(R.string.new_album_cancel, new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int whichButton) {
+                add_client_error = false;
+                dialog.cancel();
             }
         });
 
-        alert.show();
+        final AlertDialog alertClient = alert.create();
+
+        alertClient.show();
+
+
+        alertClient.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                //If the error flag was set to true then show the dialog again
+                if (add_client_error == true) {
+                    alertClient.show();
+                } else {
+                    return;
+                }
+
+            }
+        });
     }
 
 
@@ -496,20 +540,20 @@ public class PicMainActivity extends Activity {
         share.setType("image/*");
 
 
-
         ArrayList<Uri> arrayFile = new ArrayList<Uri>();
 
-        for (String imagePath: imagePaths){
+        for (String imagePath : imagePaths) {
             File imageFileToShare = new File(imagePath);
             Uri uri = Uri.fromFile(imageFileToShare);
             arrayFile.add(uri);
         }
         share.putParcelableArrayListExtra(Intent.EXTRA_STREAM, arrayFile);
 
-        startActivity(Intent.createChooser(share, "Image Share"));
+        String shareTitle = getResources().getString(R.string.share_title);
+        startActivity(Intent.createChooser(share, shareTitle));
     }
 
-    public void refresh(){
+    public void refresh() {
         items.clear();
         items.addAll(gh.getGallery());
         mAdapter.notifyDataSetChanged();
@@ -524,11 +568,11 @@ public class PicMainActivity extends Activity {
             case MotionEvent.ACTION_UP:
                 swipeYup = event.getY();
                 float deltaY = swipeYup - swipeYdown;
-                    if (Math.abs(deltaY) > MIN_SWIPE_DISTANCE) {
+                if (Math.abs(deltaY) > MIN_SWIPE_DISTANCE) {
 
-                        if (!swipeMode) {
-                            swipeMode = true;
-                            if (swipeYdown < swipeYup) { // 처음 터치한 Y값이 나중에 터치한 Y값보다 위이므로 swipe down
+                    if (!swipeMode) {
+                        swipeMode = true;
+                        if (swipeYdown < swipeYup) { // 처음 터치한 Y값이 나중에 터치한 Y값보다 위이므로 swipe down
                             timer = new Timer();
                             timer.schedule(new TimerTask() {
                                 @Override
@@ -549,8 +593,7 @@ public class PicMainActivity extends Activity {
                                     });
                                 }
                             }, 0, 1);
-                        }
-                        else { // swipe up
+                        } else { // swipe up
                             timer = new Timer();
                             timer.schedule(new TimerTask() {
                                 @Override
@@ -575,8 +618,8 @@ public class PicMainActivity extends Activity {
                     }
 
                 }
-                    // 빈공간 클릭
-                else{
+                // 빈공간 클릭
+                else {
                         /*long tempTime = System.currentTimeMillis();
                         long intervalTime = tempTime - backPressedTime;
 
@@ -603,32 +646,31 @@ public class PicMainActivity extends Activity {
             closeAndSave();
         } else {
             backPressedTime = tempTime;
-            String str = getResources().getString(R.string.close_order);
+            String str = getResources().getString(R.string.main_close);
             Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
         }
     }
 
 
-    void closeAndSave(){
+    void closeAndSave() {
         ArrayList<String> moveList = mAdapter.getRealImagePathList();
         ArrayList<String> originList = mAdapter.getOriginImagePathList();
-        for (int i = 0;i < moveList.size();i++){
+        for (int i = 0; i < moveList.size(); i++) {
 //                    String s = gh.STRSAVEPATH+"/a/myApp.PNG";
             String imagePath = originList.get(i).toString();
             String movePath = moveList.get(i).toString();
             File orginFile = new File(imagePath);
             File moveFile = new File(movePath);
-            if(!imagePath.equals(movePath)){
+            if (!imagePath.equals(movePath)) {
 
                 Log.i("ohdoking", imagePath + " -> " + movePath + "/" + orginFile.getName());
 
-                if(!imagePath.equals(movePath +"/"+ orginFile.getName())){
+                if (!imagePath.equals(movePath + "/" + orginFile.getName())) {
                     gh.fileUMove(imagePath, movePath + "/" + orginFile.getName());
                 }
 
-            }
-            else{
-                Log.i("ohdoking","same");
+            } else {
+                Log.i("ohdoking", "same");
             }
 
 //                    gh.fileUMove(imagePath,imagePath+"/"+f.getName());

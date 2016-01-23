@@ -1,5 +1,6 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="환경 설정">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#041A37">
+    <PreferenceCategory android:title="@string/setting_title">
         <!--<CheckBoxPreference
             android:key="example_checkbox"
             android:title="@string/pref_title_social_recommendations"
@@ -9,20 +10,33 @@
         <SwitchPreference
             android:defaultValue="true"
             android:key="autoUpdate"
-            android:summary="팝업 실행 여부를 지정합니다."
-            android:title="팝업 ON / OFF" />
+            android:summary="@string/setting_on_off"
+            android:title="Pic ON / OFF" />
 
         <!-- NOTE: EditTextPreference accepts EditText attributes. -->
         <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
 
         <PreferenceScreen
             android:key="tutorial"
-            android:title="@string/pref_title_display_name"
-            android:summary="튜토리얼 입니다.">
+            android:title="@string/setting_tutorial">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:targetPackage="com.yapp.pic6.picproject"
                 android:targetClass="com.yapp.pic6.picproject.TutorialActivity" />
         </PreferenceScreen>
+
+        <Preference
+            android:summary="@string/setting_send_mail"
+            android:title="@string/setting_ask">
+            <intent
+                android:action="android.intent.action.SENDTO"
+                android:data="mailto:ohdoking@gmail.com" />
+        </Preference>
+        <Preference
+            android:title="@string/setting_made_by">
+            <intent
+                android:targetClass="com.yapp.pic6.picproject.DeveloperInfoActivity"
+                android:targetPackage="com.yapp.pic6.picproject" />
+        </Preference>
     </PreferenceCategory>
 </PreferenceScreen>

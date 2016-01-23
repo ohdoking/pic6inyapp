@@ -7,14 +7,13 @@ import android.support.v4.view.ViewPager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.yapp.pic6.picproject.adapter.GridPagerAdapter;
 import com.yapp.pic6.picproject.adapter.ImageAdapter;
 
 
 
-public class DialogMainActivity extends Activity {
+public class DialogMainActivity extends BaseActivity {
 
 
     //DisplayMetrics mMetrics;
@@ -108,8 +107,8 @@ public class DialogMainActivity extends Activity {
             super.onBackPressed();
         } else {
             backPressedTime = tempTime;
-            String str = getResources().getString(R.string.close_order);
-            Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+//            String str = getResources().getString(R.string.share_title);
+//            Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
         }
     }
 

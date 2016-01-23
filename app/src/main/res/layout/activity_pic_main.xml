@@ -36,7 +36,7 @@
                 android:layout_weight="0.6"
                 android:textColor="#363636"
                 android:gravity="center"
-                android:text="0장의 사진 중 0장 선택"
+                android:text="@string/main_moved"
                 android:textSize="18sp" />
 
             <Button
@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7"
                     android:textColor="#363636"
-                    android:text="전체 선택" />
+                    android:text="@string/main_select_all" />
 
                 <Button
                     android:id="@+id/btn_add_folder"

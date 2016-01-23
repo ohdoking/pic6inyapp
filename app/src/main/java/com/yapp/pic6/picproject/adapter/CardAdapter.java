@@ -6,6 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,6 +38,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
 	ArrayList<String> movePath;
 
 	ArrayList<Integer> arraySelect;
+
+	TextView imageText;
 
 
 	public CardAdapter(Context context, ArrayList<Gallery> galleries) {
@@ -179,16 +184,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
 					HorizontalScrollView h = (HorizontalScrollView)r.getChildAt(1);
 					LinearLayout l1 = (LinearLayout)h.getChildAt(0);
 					//FrameLayout f1 = (FrameLayout)l1.getChildAt(0);
-
-
-
-
-
-
+					Animation anim_bigtosmall = AnimationUtils.loadAnimation(context, R.anim.anim_bigtosmall);
 					//비었을때
 					if(tempPath.isEmpty()){
 //						Toast.makeText(itemView.getContext(),currentItem.getImagePath() +" - NONE",Toast.LENGTH_SHORT).show();
-						Toast.makeText(itemView.getContext(),"사진을 선택해주세요.",Toast.LENGTH_SHORT).show();
+						Toast.makeText(itemView.getContext(),R.string.main_please_select,Toast.LENGTH_SHORT).show();
 					}
 					else{
 
@@ -198,7 +198,23 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
 						File f2 = new File(imgPaths.get(0).toString());
 						String fileName2 = f2.getName();
 
-						Toast.makeText(itemView.getContext(), "'" + fileName2 + "' 에서 '" + fileName + "'로 이동 되었습니다.", Toast.LENGTH_SHORT).show();
+						imgThumbnail.startAnimation(anim_bigtosmall); // folder icon animation
+
+						Animation anim_imgdown = AnimationUtils.loadAnimation(context, R.anim.anim_imgdown);
+
+						for(int i = 0; i < tempPath.size(); i++) { // select image animation
+							FrameLayout f1 = (FrameLayout) l1.getChildAt(tempPath.get(i));
+							f1.startAnimation(anim_imgdown);
+
+							imageText = (TextView) f1.getChildAt(2);
+							imageText.setText(fileName);
+
+
+						}
+//						Toast.makeText(itemView.getContext(), "'" + fileName2 + "' 에서 '" + fileName + "'로 이동 되었습니다.", Toast.LENGTH_SHORT).show();
+//						Toast.makeText(itemView.getContext(), tempPath.size() + " 장의 사진이 '" + fileName + "'로 이동 되었습니다 ", Toast.LENGTH_SHORT).show();
+						Toast.makeText(itemView.getContext(), tempPath.size() + " "+ itemView.getResources().getString(R.string.main_moved,fileName), Toast.LENGTH_SHORT).show();
+
 						for(Integer imagePath :tempPath){
 							movePath.set(imagePath, currentItem.getImagePath());
 							Log.i("integer", String.valueOf(imagePath));

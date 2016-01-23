@@ -21,8 +21,17 @@
     </style>
 
     <style name="PreferencesTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:background">#ffffff</item>
-        <item name="android:listPreferredItemHeight">48dp</item>
+        <!--<item name="colorPrimary">#f000ff</item>-->
+        <!--<item name="colorPrimaryDark">#00ff00</item>-->
+        <!--<item name="colorAccent">#ff0000</item>-->
+        <!--<item name="windowActionBar">false</item>-->
+        <!--<item name="theme">@style/ThemeOverlay.AppCompat.Dark</item>-->
+
+
+        <!--<item name="android:background">#ffffffff</item>-->
+        <!--<item name="android:background">#ffffff</item>
+        <item name="android:textColor">#000000</item>-->
+        <item name="android:listPreferredItemHeight">60dp</item>
     </style>
 
     <style name="Theme.AppCompat.Translucent">

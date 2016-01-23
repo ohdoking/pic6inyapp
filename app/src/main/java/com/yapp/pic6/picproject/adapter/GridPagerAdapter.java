@@ -64,7 +64,7 @@ public class GridPagerAdapter extends PagerAdapter {
             mThumbIdsList.add( R.drawable.blank_dir);
             mThumbDirList.add(gallery.getImagePath());
         }
-        String newfolder = context.getResources().getString(R.string.newfolder);
+        String newfolder = context.getResources().getString(R.string.new_album_title);
         mThumbTxtList.add(newfolder);
         mThumbIdsList.add( R.drawable.blank_dir);
         mThumbDirList.add("1");
@@ -129,7 +129,7 @@ public class GridPagerAdapter extends PagerAdapter {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(parent.getContext(),gridPage+"*8+"+position,Toast.LENGTH_SHORT).show();
                 String str = context.getResources().getString(R.string.trash);
-                String str2 = context.getResources().getString(R.string.newfolder);
+                String str2 = context.getResources().getString(R.string.new_album_title);
                 Log.i("where",String.valueOf(getPreferences()));
                 int resultInt = gridPage * 8 + position + 1;
                 Log.i("ss", String.valueOf(resultInt));
@@ -151,7 +151,7 @@ public class GridPagerAdapter extends PagerAdapter {
                         themedContext = new ContextThemeWrapper( context, android.R.style.Theme_Light_NoTitleBar );
                     }
                     AlertDialog.Builder alert = new AlertDialog.Builder(themedContext);
-                    alert.setTitle(R.string.new_album);
+                    alert.setTitle(R.string.new_album_title);
 //                alert.setMessage("Pls input Album's Name");
 
                     // Create EditText for entry
@@ -167,7 +167,7 @@ public class GridPagerAdapter extends PagerAdapter {
                     alert.setView(layout);
 
                     // Make an "OK" button to save the name
-                    alert.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    alert.setPositiveButton(R.string.new_album_confirm, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int whichButton) {
 
@@ -187,7 +187,7 @@ public class GridPagerAdapter extends PagerAdapter {
 
                     // Make a "Cancel" button
                     // that simply dismisses the alert
-                    alert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    alert.setNegativeButton(R.string.new_album_cancel, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int whichButton) {
                         }
