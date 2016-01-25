@@ -93,7 +93,12 @@ public class GalleryHelper {
                         " mody=" + mImageCursor.getString(mImageCursor.getColumnIndex(android.provider.MediaStore.Images.ImageColumns.DATE_MODIFIED))
                                 +" // add=" + mImageCursor.getString(mImageCursor.getColumnIndex(MediaStore.Images.ImageColumns.DATE_ADDED))
                 );
-                arr.add(data);
+
+                File f = new File(data);
+
+                if(!f.getName().equals("myApp.PNG")){
+                    arr.add(data);
+                }
             } while (mImageCursor.moveToNext());
         }
         mImageCursor.close();

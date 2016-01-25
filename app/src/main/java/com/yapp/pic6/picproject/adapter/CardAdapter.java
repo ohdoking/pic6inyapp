@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -39,8 +40,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
 
 	ArrayList<Integer> arraySelect;
 
-	TextView imageText;
+	ArrayList<Integer> selectedItem;
 
+	TextView imageText;
+	ImageView foreImg;
 
 	public CardAdapter(Context context, ArrayList<Gallery> galleries) {
 		super();
@@ -49,6 +52,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
 		tempPath = new ArrayList<Integer>();
 		movePath = new ArrayList<String>();
 		arraySelect = new ArrayList<Integer>();
+		selectedItem = new ArrayList<Integer>();
 		gh = new GalleryHelper(context);
 		this.gallerys = galleries;
 
@@ -89,6 +93,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
 		tempPath.clear();
 	}
 
+
+	public ArrayList<Integer> getSelectedItem(){
+		return selectedItem;
+	}
 	/*
 		temp image path list
 			set
@@ -174,6 +182,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
 		public ViewHolder(final View itemView) {
 			super(itemView);
 			imgThumbnail = (ImageView)itemView.findViewById(R.id.img_thumbnail);
+
+
 			tvMovie = (TextView)itemView.findViewById(R.id.tv_movie);
 			itemView.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -183,6 +193,18 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
 					LinearLayout r = (LinearLayout) ((ViewGroup) itemView.getParent()).getParent();
 					HorizontalScrollView h = (HorizontalScrollView)r.getChildAt(1);
 					LinearLayout l1 = (LinearLayout)h.getChildAt(0);
+
+					FrameLayout f3= (FrameLayout)r.getChildAt(0);
+					TextView tvCount = (TextView)f3.getChildAt(2);
+
+					LinearLayout l3= (LinearLayout)r.getChildAt(2);
+					FrameLayout f4 = (FrameLayout)l3.getChildAt(0);
+
+					CheckBox allPhotoCb = (CheckBox)f4.getChildAt(0);
+					allPhotoCb.setChecked(false);
+					tvCount.setText(originPath.size() + " " + r.getResources().getString(R.string.main_select_of, 0));
+
+
 					//FrameLayout f1 = (FrameLayout)l1.getChildAt(0);
 					Animation anim_bigtosmall = AnimationUtils.loadAnimation(context, R.anim.anim_bigtosmall);
 					//비었을때
@@ -208,12 +230,22 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
 
 							imageText = (TextView) f1.getChildAt(2);
 							imageText.setText(fileName);
+							foreImg = (ImageView)f1.getChildAt(1);
+							foreImg.setImageResource(0);
+
+							ImageView img99 =(ImageView)f1.getChildAt(0);
+							img99.getDrawable().setAlpha(50);
+
+							selectedItem.set(i,0);
+
 
 
 						}
 //						Toast.makeText(itemView.getContext(), "'" + fileName2 + "' 에서 '" + fileName + "'로 이동 되었습니다.", Toast.LENGTH_SHORT).show();
 //						Toast.makeText(itemView.getContext(), tempPath.size() + " 장의 사진이 '" + fileName + "'로 이동 되었습니다 ", Toast.LENGTH_SHORT).show();
 						Toast.makeText(itemView.getContext(), tempPath.size() + " "+ itemView.getResources().getString(R.string.main_moved,fileName), Toast.LENGTH_SHORT).show();
+
+
 
 						for(Integer imagePath :tempPath){
 							movePath.set(imagePath, currentItem.getImagePath());

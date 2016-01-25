@@ -14,109 +14,118 @@
         android:background="#ffffff"
         android:orientation="vertical">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_margin="10dp"
+            android:layout_height="64dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:orientation="horizontal">
 
+            <FrameLayout
+                android:id="@+id/dp_layout"
+                android:layout_width="1dp"
+                android:layout_height="1dp">
+
+                <!-- class에서 getWidth로 1dp값을 얻어오기 위한 Layout -->
+
+            </FrameLayout>
+
             <ImageView
-                android:layout_width="0dp"
+                android:layout_width="39dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="10dp"
-                android:layout_height="20dp"
-                android:layout_weight="0.2"
+                android:layout_gravity="left"
                 android:src="@mipmap/logo" />
-
-
 
             <TextView
                 android:id="@+id/tv_photo_count"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
                 android:textColor="#363636"
-                android:gravity="center"
-                android:text="@string/main_moved"
-                android:textSize="18sp" />
+                android:layout_gravity="center_horizontal"
+                android:text="0장의 사진 중 0장 선택"
+                android:textSize="15sp" />
 
             <Button
                 android:id="@+id/btn_setting"
-                android:layout_width="0dp"
-                android:layout_height="20dp"
-                android:layout_weight="0.1"
-                android:layout_marginRight="15dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="40dp"
+                android:layout_gravity="right"
                 android:background="@mipmap/ic_setting" />
 
             <Button
                 android:id="@+id/btn_close"
-                android:layout_width="0dp"
-                android:layout_height="20dp"
-                android:layout_weight="0.1"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="right"
                 android:background="@mipmap/ic_x" />
 
-        </LinearLayout>
+        </FrameLayout>
         <HorizontalScrollView
             android:id="@+id/horizontalScrollView"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
             android:scrollbars="none">
 
             <LinearLayout
                 android:id="@+id/layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
+                android:padding="10dp"
                 android:orientation="horizontal"/>
 
         </HorizontalScrollView>
 
         <LinearLayout
             android:layout_width="match_parent"
-
             android:layout_height="40dp"
             android:background="@xml/layout_border"
             android:orientation="horizontal">
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:orientation="horizontal">
 
                 <CheckBox
                     android:id="@+id/cb_all_photo"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:layout_gravity="left|center_vertical"
                     android:textColor="#363636"
-                    android:text="@string/main_select_all" />
+                    android:text="전체 선택" />
 
                 <Button
                     android:id="@+id/btn_add_folder"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.1"
-                    android:layout_marginRight="15dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="80dp"
                     android:background="@mipmap/ic_addfolder" />
 
                 <Button
                     android:id="@+id/btn_share"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.1"
-                    android:layout_marginRight="15dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="40dp"
                     android:background="@mipmap/ic_share" />
 
                 <Button
                     android:id="@+id/btn_trash"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.1"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="right|center_vertical"
                     android:background="@mipmap/ic_trash" />
-            </LinearLayout>
+            </FrameLayout>
 
         </LinearLayout>
 

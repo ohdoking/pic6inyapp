@@ -16,38 +16,38 @@
     <!--국제 화를 위한 네이밍-->
     <string name="trash">Trash</string>
 
-    <string name="main_select_all">Select All</string>
-    <string name="main_select_of" formatted="false"> of %d photo(s) selected</string>
-    <string name="main_moved" formatted="false"> pictures has been moved to \'%s\'</string>
-    <string name="main_please_select">Select photo</string>
-    <string name="main_close">Press onceqm more to close</string>
-    <string name="main_trash"> photo(s) has been moved to Trash</string>
-    <string name="share_title">Share</string>
+    <string name="main_select_all">全選択</string>
+    <string name="main_select_of" formatted="false"> 枚の写真中%d枚選択</string>
+    <string name="main_moved" formatted="false"> 枚の写真が\「%s\」に移動されました</string>
+    <string name="main_please_select">写真を選択してください</string>
+    <string name="main_close">もう一度押すと終了します</string>
+    <string name="main_trash">%d枚の写真がゴミ箱に移動されました</string>
+    <string name="share_title">共有</string>
 
-    <string name="new_album_title">New album</string>
-    <string name="new_album_cancel">Cancel</string>
-    <string name="new_album_confirm">OK</string>
-    <string name="new_album_done"> album has been created</string>
-    <string name="new_album_error_same">The album already exists with that name .</string>
-    <string name="new_album_error_no_name">Please enter an album name</string>
-    <string name="new_album_hint">Please enter an album name</string>
+    <string name="new_album_title">新アルバム追加</string>
+    <string name="new_album_cancel">キャンセル</string>
+    <string name="new_album_confirm">確認</string>
+    <string name="new_album_done">アルバムが生成されました</string>
+    <string name="new_album_error_same">すでにその名前のアルバムが存在します</string>
+    <string name="new_album_error_no_name">アルバム名を入力してください</string>
+    <string name="new_album_hint">アルバム名を入力してください</string>
 
-    <string name="setting_title">たていすかんなにらせちとしはきくまのりもみこひそさつ</string>
-    <string name="setting_description">Quick and Easy Photo Management</string>
-    <string name="setting_on_off">Set Pic whether to run</string>
-    <string name="setting_tutorial">Tutorial</string>
-    <string name="setting_ask">Question</string>
-    <string name="setting_send_mail">Send an email to the developer</string>
-    <string name="setting_made_by">Creator</string>
-    <string name="tutorial_no_1">Pic starts \nwhen you take or \ndownload a photo</string>
-    <string name="tutorial_no_2">Select photos you want to move</string>
-    <string name="tutorial_no_3">Click an album to move the photos</string>
-    <string name="tutorial_no_4">You can also share \nor delete the photos</string>
-    <string name="tutorial_no_5">Long-click the photo \nto enlarge</string>
-    <string name="madeby_title">Creator</string>
-    <string name="madeby_plan">Planner</string>
-    <string name="madeby_design">Designer</string>
-    <string name="madeby_develop">Developer</string>
+    <string name="setting_title">環境設定</string>
+    <string name="setting_description">簡単かつ迅速な写真整理</string>
+    <string name="setting_on_off">Pic実行するかどうかを設定します</string>
+    <string name="setting_tutorial">チュートリアル</string>
+    <string name="setting_ask">お問い合わせ</string>
+    <string name="setting_send_mail">開発者にメールを送信します</string>
+    <string name="setting_made_by">作成者</string>
+    <string name="tutorial_no_1">写真を撮ったりダウンロードすると、ポップアップが表示されます</string>
+    <string name="tutorial_no_2">写真を選択して</string>
+    <string name="tutorial_no_3">アルバムをタッチすると、選択した写真が移動されます</string>
+    <string name="tutorial_no_4">選択した写真をすぐに共有したり、削除することができます</string>
+    <string name="tutorial_no_5">写真を長押しすると拡大されます</string>
+    <string name="madeby_title">作成者</string>
+    <string name="madeby_plan">企画</string>
+    <string name="madeby_design">デザイン</string>
+    <string name="madeby_develop">開発</string>
 
     <string name="jsi">Sangin Chun</string>
     <string name="khj">Hyunjung Kim</string>

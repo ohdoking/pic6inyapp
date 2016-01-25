@@ -22,7 +22,7 @@ public class DeviceBootReceiver extends BroadcastReceiver {
         }
     }
 
-    //  값 불러오기
+    //      값 불러오기
     private String getPreferences() {
         SharedPreferences pref = context.getSharedPreferences("pref", Context.MODE_PRIVATE);
         return pref.getString("popup", "");

@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -68,6 +69,8 @@ public class PicMainActivity extends BaseActivity {
 
     ArrayList<Gallery> items;
 
+
+
     LinearLayout wrap;
     Timer timer;
     public int count = 0;
@@ -83,6 +86,7 @@ public class PicMainActivity extends BaseActivity {
     private long backPressedTime = 0;
 
     boolean add_client_error;
+    Handler handler;
 
     int num;
 
@@ -91,7 +95,7 @@ public class PicMainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.anim_layoutup, R.anim.anim_none);
         setContentView(R.layout.activity_pic_main);
-
+        handler = new Handler();
         num = 0;
 
         gh = new GalleryHelper(PicMainActivity.this);
@@ -142,19 +146,25 @@ public class PicMainActivity extends BaseActivity {
         foreImg = new ImageView[newPictureList.size()];
         imageText = new TextView[newPictureList.size()];
 
+
+
 //        tvCount.setText(String.valueOf(newPictureList.size()) + "장의 사진 중 " + String.valueOf(newPictureList.size()) + "장 선택");
         tvCount.setText(newPictureList.size() + " " + getResources().getString(R.string.main_select_of, newPictureList.size()));
+//        tvCount.setText(newPictureList.size() + " " + getResources().getString(R.string.main_select_of, mAdapter.getTempImagePathList().size()));
 
 //        tvCount.setText(String.valueOf(newPictureList.size()) + " - " + String.valueOf(newPictureList.size()) + "!");
         for (int i = 0; i < newPictureList.size(); i++) {
             final int index;
             index = i;
+            mAdapter.getSelectedItem().add(1);
 
             frameLayout[i] = new FrameLayout(this);
-            FrameLayout.LayoutParams lpf = new FrameLayout.LayoutParams(220, 220);
-            lpf.setMargins(0, 0, 80, 0);
+            FrameLayout.LayoutParams lpf = new FrameLayout.LayoutParams(300, 300);
+//            lpf.setMargins(0, 0, 700, 0);
+
 
             frameLayout[i].setLayoutParams(lpf);
+            frameLayout[i].setPadding(0,0,80,0);
 //
 
             imageView[i] = new ImageView(this);
@@ -210,6 +220,11 @@ public class PicMainActivity extends BaseActivity {
                 public void onClick(View v) {
                     allPhotoCb.setChecked(false);
 
+
+
+
+                    Log.i("ohdokingLog",mAdapter.getSelectedItem().get(index).toString() + " : " + imageText[index].getText().toString());
+
                     if (arraySelect.get(index) == 0) {//&& !arrayList.contains(index)) {
 //                        imageView[index].setColorFilter(Color.CYAN);
                         foreImg[index].setImageResource(R.mipmap.check_shadow);
@@ -226,6 +241,19 @@ public class PicMainActivity extends BaseActivity {
                         mAdapter.removeTempImagePath(index);
                         arrayList.remove(String.valueOf(index));
 //                        arraySelect.remove(index);
+                    }
+                    if(mAdapter.getSelectedItem().get(index) == 1 && !imageText[index].getText().equals("")){
+                        Log.i("ohdokingLog", "change!!!!");
+                        imageView[index].getDrawable().setAlpha(50);
+                        mAdapter.getSelectedItem().set(index, 0);
+                    }
+                    else if(mAdapter.getSelectedItem().get(index) == 1){
+                        Log.i("ohdokingLog","wait change!!!!");
+                        mAdapter.getSelectedItem().set(index, 0);
+                    }
+                    else{
+                        Log.i("ohdokingLog","no change!!!!");
+                        mAdapter.getSelectedItem().set(index, 1);
                     }
 
                     if (arraySelect.indexOf(0) == -1) {
@@ -248,6 +276,7 @@ public class PicMainActivity extends BaseActivity {
 
                 }
             });
+
 
             imageView[index].setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -302,6 +331,7 @@ public class PicMainActivity extends BaseActivity {
     public void clickevent() {
 
         final Animation anim_bigtosmall = AnimationUtils.loadAnimation(this, R.anim.anim_bigtosmall);
+        final Animation anim_imgdelete = AnimationUtils.loadAnimation(this, R.anim.anim_imgdelete);
 
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -340,8 +370,13 @@ public class PicMainActivity extends BaseActivity {
             public void onClick(View v) {
                 /*gh.moveTrash(gh.STRSAVEPATH + "/e/myApp.PNG");
                 refresh();*/
+                tvCount.setText(newPictureList.size() + " " + getResources().getString(R.string.main_select_of, 0));
+
+//                img99.getDrawable().setAlpha(50);
+
 
                 trashBtn.startAnimation(anim_bigtosmall);
+                allPhotoCb.setChecked(false);
                 //비었을때
                 if (mAdapter.getTempImagePathList().isEmpty()) {
 
@@ -356,10 +391,12 @@ public class PicMainActivity extends BaseActivity {
                         mAdapter.getRealImagePathList().set(imagePath, gh.TRASHPATH);
                         Log.i("integer", String.valueOf(imagePath));
 
+                        imageView[imagePath].startAnimation(anim_imgdelete);
+
                         imageView[imagePath].setColorFilter(Color.parseColor("#99999999"));
                         foreImg[imagePath].setImageResource(0);
                         imageView[imagePath].setColorFilter(Color.TRANSPARENT);
-                        imageText[imagePath].setText("휴지통");
+                        imageText[imagePath].setText("Trash");
 //                        imageText[imagePath].setText(R.string.trash);
                     }
                     for (String str : mAdapter.getOriginImagePathList()) {
@@ -372,6 +409,13 @@ public class PicMainActivity extends BaseActivity {
                         arraySelect.set(j, 0);
                     }
                     mAdapter.getTempImagePathList().clear();
+                }
+                for(int i = 0 ; i < mAdapter.getSelectedItem().size();i++){
+
+//                    if(mAdapter.getSelectedItem().get(i) == 1){
+                    imageView[i].getDrawable().setAlpha(50);
+                    mAdapter.getSelectedItem().set(i, 0);
+//                    }
                 }
             }
         });
@@ -403,7 +447,7 @@ public class PicMainActivity extends BaseActivity {
             public void onClick(View v) {
                 addFolderBtn.startAnimation(anim_bigtosmall);
                 addFolderDialog();
-                refresh();
+//                refresh();
             }
         });
 
@@ -487,6 +531,14 @@ public class PicMainActivity extends BaseActivity {
                         e.putString(PREF_NAME, inputName);
                         e.commit();*/
 
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refresh();
+                        Log.i("ohdoking", "refresh test");
+                    }
+                }, 1000);
+
                 String inputName = input.getText().toString();
 
                 if (inputName.equals("")) {
@@ -496,6 +548,7 @@ public class PicMainActivity extends BaseActivity {
                     gh.makeDirectory(inputName);
                     add_client_error = false;
                 }
+
 
 
             }
@@ -526,6 +579,11 @@ public class PicMainActivity extends BaseActivity {
                 } else {
                     return;
                 }
+
+
+
+
+
 
             }
         });
