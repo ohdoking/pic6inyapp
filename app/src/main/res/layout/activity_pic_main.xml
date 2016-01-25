@@ -101,7 +101,7 @@
                     android:layout_height="24dp"
                     android:layout_gravity="left|center_vertical"
                     android:textColor="#363636"
-                    android:text="전체 선택" />
+                    android:text="@string/main_select_all" />
 
                 <Button
                     android:id="@+id/btn_add_folder"
