@@ -12,7 +12,11 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
+import android.support.annotation.Nullable;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.tsengvn.typekit.TypekitContextWrapper;
@@ -32,6 +36,19 @@ import java.util.List;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class PicSettingsActivity extends PreferenceActivity {
+
+    @Nullable
+    @Override
+    public View onCreateView(String name, Context context, AttributeSet attrs) {
+        View v = super.onCreateView(name, context, attrs);
+        if(v != null) {
+            ListView lv = (ListView) v.findViewById(android.R.id.list);
+            lv.setPadding(10, 10, 10, 10);
+        }
+        return v;
+
+
+    }
 
 
     /**

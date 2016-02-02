@@ -512,6 +512,7 @@ public class PicMainActivity extends BaseActivity {
         // Create EditText for entry
         final EditText input = new EditText(PicMainActivity.this);
         input.setHint(R.string.new_album_hint);
+        input.setHintTextColor(Color.GRAY);
         LinearLayout.LayoutParams editLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         editLayoutParams.setMargins(50, 60, 50, 25);
         input.setLayoutParams(editLayoutParams);
@@ -535,7 +536,6 @@ public class PicMainActivity extends BaseActivity {
                     @Override
                     public void run() {
                         refresh();
-                        Log.i("ohdoking", "refresh test");
                     }
                 }, 1000);
 

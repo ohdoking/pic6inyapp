@@ -1,5 +1,5 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#041A37">
+    >
     <PreferenceCategory android:title="@string/setting_title">
         <!--<CheckBoxPreference
             android:key="example_checkbox"

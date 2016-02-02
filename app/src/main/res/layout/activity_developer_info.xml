@@ -1,112 +1,131 @@
- <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-     android:orientation="vertical"
-
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     tools:context="com.yapp.pic6.picproject.DeveloperInfoActivity">
 
-    <TextView android:text="@string/madeby_title"
-        android:layout_marginTop="80dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_width="fill_parent"
-        android:gravity="center"
-        android:layout_height="wrap_content" />
-
-     <TextView android:text="@string/madeby_plan"
-         android:textColor="#009688"
-         android:textSize="18sp"
-         android:layout_marginTop="24dp"
-         android:layout_width="fill_parent"
-         android:gravity="center"
-         android:layout_height="wrap_content" />
-
-     <TextView android:text="@string/jsi"
-         android:layout_marginTop="8dp"
-         android:textSize="18sp"
-         android:gravity="center"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content" />
-
-     <TextView android:text="0103123_@naver.com"
-         android:layout_marginTop="4dp"
-         android:textSize="18sp"
-         android:gravity="center"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
-     <TextView android:text="@string/madeby_design"
-         android:textColor="#009688"
-         android:layout_marginTop="24dp"
-         android:textSize="18sp"
-         android:gravity="center"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:gravity="center"
+            android:text="@string/madeby_title"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-     <TextView android:text="@string/khj"
-         android:layout_marginTop="8dp"
-         android:textSize="18sp"
-         android:gravity="center"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="@string/madeby_plan"
+            android:textColor="#009688"
+            android:textSize="18sp" />
 
-     <TextView android:text="kb8946_@naver.com"
-         android:layout_marginTop="4dp"
-         android:textSize="18sp"
-         android:gravity="center"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/jsi"
+            android:textSize="18sp" />
 
-     <TextView android:text="@string/madeby_develop"
-         android:textColor="#009688"
-         android:textSize="18sp"
-         android:gravity="center"
-         android:layout_marginTop="24dp"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="0103123_@naver.com"
+            android:textSize="18sp" />
 
-     <TextView android:text="@string/kgh"
-         android:layout_marginTop="8dp"
-         android:textSize="18sp"
-         android:gravity="center"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content" />
 
-     <TextView android:text="arts92@naver.com"
-         android:layout_marginTop="4dp"
-         android:textSize="18sp"
-         android:gravity="center"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="@string/madeby_design"
+            android:textColor="#009688"
+            android:textSize="18sp" />
 
-     <TextView android:text="@string/pth"
-         android:layout_marginTop="8dp"
-         android:textSize="18sp"
-         android:gravity="center"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/khj"
+            android:textSize="18sp" />
 
-     <TextView android:text="ariz3333@gmail.com"
-         android:layout_marginTop="4dp"
-         android:textSize="18sp"
-         android:gravity="center"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="kb8946_@naver.com"
+            android:textSize="18sp" />
 
-     <TextView android:text="@string/odk"
-         android:layout_marginTop="8dp"
-         android:textSize="18sp"
-         android:gravity="center"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="@string/madeby_develop"
+            android:textColor="#009688"
+            android:textSize="18sp" />
 
-     <TextView android:text="ohdoking@gmail.com"
-         android:layout_marginTop="4dp"
-         android:textSize="18sp"
-         android:gravity="center"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/kgh"
+            android:textSize="18sp" />
 
-</LinearLayout>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="arts92@naver.com"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/pth"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="ariz3333@gmail.com"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/odk"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="ohdoking@gmail.com"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+</ScrollView>
