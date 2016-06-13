@@ -13,7 +13,7 @@ public class PicApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Typekit.getInstance()
-                .addNormal(Typekit.createFromAsset(this, "fonts/Roboto-Thin.ttf"));
+                .addNormal(Typekit.createFromAsset(this, "fonts/NotoSansCJKkr-Thin.otf"));
     }
 
 

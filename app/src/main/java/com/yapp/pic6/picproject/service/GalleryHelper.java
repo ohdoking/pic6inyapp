@@ -48,7 +48,7 @@ public class GalleryHelper {
             savePreferences(1);
         }
     }
-    // °ª ÀúÀåÇÏ±â
+    // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
     private void savePreferences(int value){
         SharedPreferences pref = context.getSharedPreferences("pref", context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
@@ -262,9 +262,9 @@ public class GalleryHelper {
     }
 
     /*
-         Æú´õ »ý¼º
+         ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
          params
-            dir_path : Æú´õ ÀÌ¸§
+            dir_path : ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
      */
     public File makeDirectory(String dir_path){
         File dir = new File(STRSAVEPATH + dir_path);
@@ -324,9 +324,9 @@ public class GalleryHelper {
 
 
     /*
-        ÈÞÁöÅë ÀÌµ¿
+        ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
         params
-            inFileName : ÆÄÀÏ °æ·Î
+            inFileName : ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
      */
     public void moveTrash(String inFileName){
 

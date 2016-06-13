@@ -18,5 +18,13 @@
     <item name="dialog_button_padding" type="dimen">8dp</item>
     <item name="dialog_button_text_size" type="dimen">14sp</item>
     <item name="dialog_title_drawable_padding" type="dimen">8dp</item>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="dots_height">30dp</dimen>
+    <dimen name="dots_margin_bottom">20dp</dimen>
+    <dimen name="img_width_height">120dp</dimen>
+    <dimen name="slide_title">30dp</dimen>
+    <dimen name="slide_desc">16dp</dimen>
+    <dimen name="desc_padding">40dp</dimen>
 
 </resources>

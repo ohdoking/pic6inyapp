@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="bottom"
     android:background="@android:color/transparent"
+    android:gravity="bottom"
     android:orientation="vertical"
     tools:context="com.yapp.pic6.picproject.PicMainActivity">
 
@@ -13,6 +13,21 @@
         android:layout_height="fill_parent"
         android:background="#ffffff"
         android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_height="30px"
+            android:layout_width="match_parent"
+            android:layout_marginTop="13dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/arrowImg"
+                android:layout_height="10dp"
+                android:layout_width="29dp"
+                android:scaleType="fitXY"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/arrow_up"/>
+        </LinearLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -33,38 +48,39 @@
             <ImageView
                 android:layout_width="39dp"
                 android:layout_height="30dp"
-                android:layout_marginTop="10dp"
                 android:layout_gravity="left"
+                android:layout_marginTop="10dp"
                 android:src="@mipmap/logo" />
 
             <TextView
                 android:id="@+id/tv_photo_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="20dp"
-                android:textColor="#363636"
                 android:layout_gravity="center_horizontal"
+                android:paddingTop="20dp"
                 android:text="0장의 사진 중 0장 선택"
+                android:textColor="#363636"
                 android:textSize="15sp" />
 
             <Button
                 android:id="@+id/btn_setting"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="40dp"
                 android:layout_gravity="right"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="16dp"
                 android:background="@mipmap/ic_setting" />
 
             <Button
                 android:id="@+id/btn_close"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginTop="16dp"
                 android:layout_gravity="right"
+                android:layout_marginTop="16dp"
                 android:background="@mipmap/ic_x" />
 
         </FrameLayout>
+
         <HorizontalScrollView
             android:id="@+id/horizontalScrollView"
             android:layout_width="match_parent"
@@ -77,8 +93,10 @@
                 android:id="@+id/layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="10dp"
-                android:orientation="horizontal"/>
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" />
 
         </HorizontalScrollView>
 
@@ -100,8 +118,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_gravity="left|center_vertical"
-                    android:textColor="#363636"
-                    android:text="@string/main_select_all" />
+                    android:text="@string/main_select_all"
+                    android:textColor="#363636" />
 
                 <Button
                     android:id="@+id/btn_add_folder"
@@ -130,10 +148,11 @@
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
+
+            android:paddingTop="45px"
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="5dp" />
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 </LinearLayout>

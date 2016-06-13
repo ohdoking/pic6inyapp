@@ -20,7 +20,7 @@ public class FifthService extends Service {
 
     @Override
     public void onCreate(){
-//        Toast.makeText(this, "¼­ºñ½º »ý¼º", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_SHORT).show();
         Log.i(TAG, "Service onCreate");
 
         isRunning = true;
@@ -28,7 +28,7 @@ public class FifthService extends Service {
 
     @Override
     public void onDestroy() {
-//        Toast.makeText(this, "¼­ºñ½º Á¾·á", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_SHORT).show();
 
         isRunning = false;
 
@@ -38,7 +38,7 @@ public class FifthService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-//        Toast.makeText(this, "¼­ºñ½º ½ÃÀÛ", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_SHORT).show();
 
         Log.i(TAG, "Service onStartCommand");
 
@@ -56,7 +56,7 @@ public class FifthService extends Service {
                 try {
                     Log.i(TAG, "5sec");
                     Intent serviceIntent = new Intent().setAction("com.yapp.pic6.5sec");
-                    // ÁÖ±âÀûÀ¸·Î ºê·ÎµåÄ³½ºÆ® ¼Û½Å
+                    // ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Îµï¿½Ä³ï¿½ï¿½Æ® ï¿½Û½ï¿½
                     sendBroadcast(serviceIntent);
                     Thread.sleep(5000);
                 } catch (InterruptedException e) {

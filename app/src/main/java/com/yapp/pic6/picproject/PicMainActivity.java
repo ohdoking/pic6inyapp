@@ -5,7 +5,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,10 +19,13 @@ import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -63,6 +72,8 @@ public class PicMainActivity extends BaseActivity {
 
     CheckBox allPhotoCb;
 
+    ImageView arrowImg;
+
     ArrayList<String> newPictureList;
 
     GalleryHelper gh;
@@ -77,7 +88,8 @@ public class PicMainActivity extends BaseActivity {
     public float wrapYup, wrapYdown;
     private float swipeYup, swipeYdown;
     static final int MIN_SWIPE_DISTANCE = 150; //swipe 액션으로 인식하는 최소값
-    static final int FIRST_ACTIVITY_Y = 700; //처음 액티비티 Y값
+    float FIRST_ACTIVITY_Y = 500; //처음 액티비티 Y값
+    float pixel;
     static final int PER_DISTANCE = 10; //1ms마다 이동시킬 Y값
     boolean swipeMode = false; //true면 swipe 실행 중
 
@@ -93,10 +105,41 @@ public class PicMainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.anim_layoutup, R.anim.anim_none);
+//        overridePendingTransition(R.anim.anim_layoutup, R.anim.anim_none);
         setContentView(R.layout.activity_pic_main);
         handler = new Handler();
         num = 0;
+
+        FIRST_ACTIVITY_Y = dpToPixel(200);
+
+        final Display displayWrap = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+        wrap = (LinearLayout)findViewById(R.id.wrap);
+        wrap.setY(displayWrap.getHeight());
+
+        // pop up
+        if (!swipeMode) {
+            swipeMode = true;
+            timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    count++;
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (wrap.getY() >= FIRST_ACTIVITY_Y) {
+                                wrapYup = wrap.getY();
+                                wrap.setY(wrapYup - PER_DISTANCE);
+                            } else {
+                                count = 0;
+                                timer.cancel();
+                                swipeMode = false;
+                            }
+                        }
+                    });
+                }
+            }, 0, 1);
+        }
 
         gh = new GalleryHelper(PicMainActivity.this);
 
@@ -114,7 +157,7 @@ public class PicMainActivity extends BaseActivity {
         mRecyclerView.setHasFixedSize(true);
 
         items = gh.getGallery();
-        mAdapter = new CardAdapter(getApplicationContext(), items);
+        mAdapter = new CardAdapter(PicMainActivity.this, items);
         mRecyclerView.setAdapter(mAdapter);
 
         mAdapter.setArray(gh.newPicture());
@@ -180,9 +223,10 @@ public class PicMainActivity extends BaseActivity {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 4;
             //		options.inJustDecodeBounds = true;
-            final Bitmap bitmapImage = BitmapFactory.decodeFile(newPictureList.get(i), options);
+            Bitmap bitmapImage = BitmapFactory.decodeFile(newPictureList.get(i), options);
+            final Bitmap bitmapImage2 = getRoundedCornerBitmap(bitmapImage);
             if (bitmapImage != null) {
-                resized = Bitmap.createScaledBitmap(bitmapImage, 500, 500, true);
+                resized = Bitmap.createScaledBitmap(bitmapImage2, 500, 500, true);
             }
 
 
@@ -282,7 +326,7 @@ public class PicMainActivity extends BaseActivity {
                 @Override
                 public boolean onLongClick(View v) {
                     Intent i = new Intent(PicMainActivity.this, PhotoViewActivity.class);
-                    i.putExtra("event_name", bitmapImage);
+                    i.putExtra("event_name", bitmapImage2);
                     startActivity(i);
 
                     return false;
@@ -305,7 +349,7 @@ public class PicMainActivity extends BaseActivity {
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.anim_none, R.anim.anim_layoutdown);
+//        overridePendingTransition(R.anim.anim_none, R.anim.anim_layoutdown);
     }
 
     public void getId() {
@@ -326,6 +370,8 @@ public class PicMainActivity extends BaseActivity {
 
         layout = (LinearLayout) findViewById(R.id.layout);
         scrollView = (HorizontalScrollView) findViewById(R.id.horizontalScrollView);
+
+        arrowImg = (ImageView)findViewById(R.id.arrowImg);
     }
 
     public void clickevent() {
@@ -352,7 +398,7 @@ public class PicMainActivity extends BaseActivity {
                 settingBtn.startAnimation(anim_bigtosmall);
                 Intent i = new Intent(PicMainActivity.this, PicSettingsActivity.class);
                 startActivity(i);
-                finish();
+                finishAnim();
 
                 /*if(i == 0){
                     mAdapter.setTempImagePath(0);
@@ -407,6 +453,10 @@ public class PicMainActivity extends BaseActivity {
                     }
                     for (int j = 0; j < arraySelect.size(); j++) {
                         arraySelect.set(j, 0);
+                    }
+
+                    if(mAdapter.getTempImagePathList().size() == mAdapter.getOriginImagePathList().size() || mAdapter.checkChangeAll() ){
+                        finish();
                     }
                     mAdapter.getTempImagePathList().clear();
                 }
@@ -513,6 +563,7 @@ public class PicMainActivity extends BaseActivity {
         final EditText input = new EditText(PicMainActivity.this);
         input.setHint(R.string.new_album_hint);
         input.setHintTextColor(Color.GRAY);
+        input.setTextColor(Color.parseColor("#363636"));
         LinearLayout.LayoutParams editLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         editLayoutParams.setMargins(50, 60, 50, 25);
         input.setLayoutParams(editLayoutParams);
@@ -645,8 +696,10 @@ public class PicMainActivity extends BaseActivity {
                                             } else {
                                                 count = 0;
                                                 timer.cancel();
+                                                arrowImg.setImageResource(R.mipmap.arrow_up);
                                                 swipeMode = false;
                                             }
+
                                         }
                                     });
                                 }
@@ -666,6 +719,7 @@ public class PicMainActivity extends BaseActivity {
                                             } else {
                                                 count = 0;
                                                 timer.cancel();
+                                                arrowImg.setImageResource(R.mipmap.arrow_down);
                                                 swipeMode = false;
                                             }
                                         }
@@ -693,6 +747,27 @@ public class PicMainActivity extends BaseActivity {
         }
         return super.onTouchEvent(event);
     }
+    public Bitmap getRoundedCornerBitmap(Bitmap bitmap) {
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+                bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        final RectF rectF = new RectF(rect);
+        final float roundPx = 12;
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+
+        return output;
+    }
 
     @Override
     public void onBackPressed() {
@@ -700,7 +775,7 @@ public class PicMainActivity extends BaseActivity {
         long intervalTime = tempTime - backPressedTime;
 
         if (0 <= intervalTime && FINSH_INTERVAL_TIME >= intervalTime) {
-            super.onBackPressed();
+//            super.onBackPressed();
             closeAndSave();
         } else {
             backPressedTime = tempTime;
@@ -733,7 +808,42 @@ public class PicMainActivity extends BaseActivity {
 
 //                    gh.fileUMove(imagePath,imagePath+"/"+f.getName());
         }
-        finish();
+        finishAnim ();
+    }
+    //dp 를 pixel로 변환
+    float dpToPixel (float dp) {
+        pixel = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
+        return pixel;
+    }
+    //내려가는애
+    public void finishAnim () {
+        // pop down
+        final Display displayWrap = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+        wrap = (LinearLayout)findViewById(R.id.wrap);
+        if (!swipeMode) {
+            swipeMode = true;
+            timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    count++;
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (wrap.getY() <= displayWrap.getHeight()) {
+                                wrapYdown = wrap.getY();
+                                wrap.setY(wrapYdown + PER_DISTANCE);
+                            } else {
+                                count = 0;
+                                timer.cancel();
+                                swipeMode = false;
+                                finish();
+                            }
+                        }
+                    });
+                }
+            }, 0, 1);
+        }
     }
 
 }

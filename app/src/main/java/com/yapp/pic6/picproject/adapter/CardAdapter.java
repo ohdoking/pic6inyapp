@@ -1,5 +1,6 @@
 package com.yapp.pic6.picproject.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -135,6 +136,16 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
 		return viewHolder.currentItem.getImagePath();
 	}
 
+	public boolean checkChangeAll(){
+
+		for(int i = 0; i < originPath.size()  ; i ++){
+			if(originPath.get(i).equals(movePath.get(i))){
+				return false;
+			}
+		}
+		return true;
+	}
+
 
 
 
@@ -179,25 +190,30 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
 
 
 
-		public ViewHolder(final View itemView) {
+			public ViewHolder(final View itemView) {
 			super(itemView);
 			imgThumbnail = (ImageView)itemView.findViewById(R.id.img_thumbnail);
 
 
 			tvMovie = (TextView)itemView.findViewById(R.id.tv_movie);
+
+			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			lp.setMargins(0, 0, 0, 30);
+			itemView.setLayoutParams(lp);
+
 			itemView.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					imgPaths = movePath;
 
 					LinearLayout r = (LinearLayout) ((ViewGroup) itemView.getParent()).getParent();
-					HorizontalScrollView h = (HorizontalScrollView)r.getChildAt(1);
+					HorizontalScrollView h = (HorizontalScrollView)r.getChildAt(2);
 					LinearLayout l1 = (LinearLayout)h.getChildAt(0);
 
-					FrameLayout f3= (FrameLayout)r.getChildAt(0);
+					FrameLayout f3= (FrameLayout)r.getChildAt(1);
 					TextView tvCount = (TextView)f3.getChildAt(2);
 
-					LinearLayout l3= (LinearLayout)r.getChildAt(2);
+					LinearLayout l3= (LinearLayout)r.getChildAt(3);
 					FrameLayout f4 = (FrameLayout)l3.getChildAt(0);
 
 					CheckBox allPhotoCb = (CheckBox)f4.getChildAt(0);
@@ -266,8 +282,15 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
 						for(int j = 0 ;j < arraySelect.size();j++){
 							arraySelect.set(j,0);
 						}
+//						Log.i("ohohoh",String.valueOf(checkChangeAll()));
+							if(tempPath.size() == originPath.size() || checkChangeAll() ){
+								((Activity)context).finish();
+							}
 						tempPath.clear();
 					}
+
+
+
 
 
 
@@ -279,6 +302,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
 
 		}
 	}
+
 
 
 }

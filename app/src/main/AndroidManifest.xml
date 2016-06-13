@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.yapp.pic6.picproject" >
+    package="com.yapp.pic6.picproject">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -11,29 +11,27 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
+        android:name=".PicApplication"
         android:allowBackup="true"
         android:icon="@mipmap/systemicon_logo"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:name = "com.yapp.pic6.picproject.PicApplication">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".DialogTestActivity"
             android:exported="true"
-            android:label="@string/title_activity_dialog_test" >
-        </activity>
+            android:label="@string/title_activity_dialog_test"></activity>
         <activity
             android:name=".AddActivity"
-            android:label="@string/title_activity_add" >
-        </activity>
+            android:label="@string/title_activity_add"></activity>
         <activity
             android:name=".GridAcitivy"
-            android:label="@string/title_activity_grid_acitivy" >
-        </activity>
+            android:label="@string/title_activity_grid_acitivy"></activity>
         <activity
             android:name=".PicSettingsActivity"
-            android:theme="@style/PreferencesTheme"
-            android:label="@string/title_activity_pic_settings" >
-            <!--android:theme="@style/PreferencesTheme"-->
+            android:label="@string/title_activity_pic_settings"
+            android:theme="@style/PreferencesTheme">
+
+            <!-- android:theme="@style/PreferencesTheme" -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,56 +41,48 @@
         <activity
             android:name=".DialogMainActivity"
             android:label="@string/title_activity_dialog_main"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-        </activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
 
         <service android:name=".service.FifthService" />
 
         <receiver
             android:name=".service.MyBroadcastReceiver"
-            android:enabled="true" >
-            <intent-filter>
-                <action android:name="com.yapp.pic6.5sec" />
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            </intent-filter>
-        </receiver>
-
-        <receiver android:name=".service.DeviceBootReceiver"
             android:enabled="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="com.yapp.pic6.5sec" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".service.DeviceBootReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
         <activity
             android:name=".TutorialActivity"
             android:label="@string/title_activity_tutorial"
-            android:theme ="@android:style/Theme.Light.NoTitleBar">
-
-
-        </activity>
+            android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity
             android:name=".DeveloperInfoActivity"
             android:label="@string/title_activity_developer_info"
-            android:theme="@android:style/Theme.Light.NoTitleBar">
-        </activity>
+            android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity
             android:name=".FinishTestActivity"
-            android:label="@string/title_activity_finish_test" >
-        </activity>
+            android:label="@string/title_activity_finish_test"></activity>
         <activity
             android:name=".PicMainActivity"
             android:label="@string/title_activity_pic_main"
-            android:theme="@style/MainTheme">
-        </activity>
+            android:theme="@style/MainTheme"></activity>
         <activity
             android:name=".PhotoViewActivity"
-            android:label="@string/title_activity_photo_view" >
-        </activity>
-
-
-
-
+            android:label="@string/title_activity_photo_view"></activity>
+        <activity
+            android:name=".TutorialActivity2"
+            android:label="@string/title_activity_tutorial2"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
