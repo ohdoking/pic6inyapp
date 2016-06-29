@@ -48,6 +48,8 @@
     <string name="madeby_design">UX/UI</string>
     <string name="madeby_develop">Developer</string>
 
+
+
     <string name="jsi">Sangin Chun</string>
     <string name="khj">Hyunjung Kim</string>
     <string name="kgh">Gahyun Kim</string>
@@ -74,6 +76,8 @@
 
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>
+
+    <string name="complete_move">complete photo move!</string>
 
 
 </resources>

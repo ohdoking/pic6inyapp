@@ -54,11 +54,11 @@ public class FifthService extends Service {
         public void run() {
             while (isRunning == true) {
                 try {
-                    Log.i(TAG, "5sec");
+                    Log.i(TAG, "1sec");
                     Intent serviceIntent = new Intent().setAction("com.yapp.pic6.5sec");
                     // �ֱ������� ��ε�ĳ��Ʈ �۽�
                     sendBroadcast(serviceIntent);
-                    Thread.sleep(5000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

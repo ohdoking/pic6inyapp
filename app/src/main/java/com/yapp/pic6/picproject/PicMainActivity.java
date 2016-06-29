@@ -1,5 +1,6 @@
 package com.yapp.pic6.picproject;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -267,7 +268,7 @@ public class PicMainActivity extends BaseActivity {
 
 
 
-                    Log.i("ohdokingLog",mAdapter.getSelectedItem().get(index).toString() + " : " + imageText[index].getText().toString());
+//                    Log.i("ohdokingLog",mAdapter.getSelectedItem().get(index).toString() + " : " + imageText[index].getText().toString());
 
                     if (arraySelect.get(index) == 0) {//&& !arrayList.contains(index)) {
 //                        imageView[index].setColorFilter(Color.CYAN);
@@ -287,16 +288,16 @@ public class PicMainActivity extends BaseActivity {
 //                        arraySelect.remove(index);
                     }
                     if(mAdapter.getSelectedItem().get(index) == 1 && !imageText[index].getText().equals("")){
-                        Log.i("ohdokingLog", "change!!!!");
+//                        Log.i("ohdokingLog", "change!!!!");
                         imageView[index].getDrawable().setAlpha(50);
                         mAdapter.getSelectedItem().set(index, 0);
                     }
                     else if(mAdapter.getSelectedItem().get(index) == 1){
-                        Log.i("ohdokingLog","wait change!!!!");
+//                        Log.i("ohdokingLog","wait change!!!!");
                         mAdapter.getSelectedItem().set(index, 0);
                     }
                     else{
-                        Log.i("ohdokingLog","no change!!!!");
+//                        Log.i("ohdokingLog","no change!!!!");
                         mAdapter.getSelectedItem().set(index, 1);
                     }
 
@@ -429,13 +430,13 @@ public class PicMainActivity extends BaseActivity {
                     Toast.makeText(getApplicationContext(), R.string.main_please_select, Toast.LENGTH_SHORT).show();
                 } else {
 //                    Toast.makeText(getApplicationContext(), mAdapter.getTempImagePathList().size() + " 장의 사진이 휴지통으로 이동되었습니다 ", Toast.LENGTH_SHORT).show();
-                    Log.i("ohdoking", "ohdokingCheck");
+//                    Log.i("ohdoking", "ohdokingCheck");
 
                     String message = getResources().getString(R.string.main_trash);
                     Toast.makeText(getApplicationContext(), mAdapter.getTempImagePathList().size() + message, Toast.LENGTH_SHORT).show();
                     for (Integer imagePath : mAdapter.getTempImagePathList()) {
                         mAdapter.getRealImagePathList().set(imagePath, gh.TRASHPATH);
-                        Log.i("integer", String.valueOf(imagePath));
+//                        Log.i("integer", String.valueOf(imagePath));
 
                         imageView[imagePath].startAnimation(anim_imgdelete);
 
@@ -445,18 +446,28 @@ public class PicMainActivity extends BaseActivity {
                         imageText[imagePath].setText("Trash");
 //                        imageText[imagePath].setText(R.string.trash);
                     }
-                    for (String str : mAdapter.getOriginImagePathList()) {
-                        Log.i("origin", str);
-                    }
-                    for (String str : mAdapter.getRealImagePathList()) {
-                        Log.i("move", str);
-                    }
+//                    for (String str : mAdapter.getOriginImagePathList()) {
+////                        Log.i("origin", str);
+//                    }
+//                    for (String str : mAdapter.getRealImagePathList()) {
+////                        Log.i("move", str);
+//                    }
                     for (int j = 0; j < arraySelect.size(); j++) {
                         arraySelect.set(j, 0);
                     }
 
                     if(mAdapter.getTempImagePathList().size() == mAdapter.getOriginImagePathList().size() || mAdapter.checkChangeAll() ){
-                        finish();
+//                        finish();
+                        closeAndSave();
+//                        Toast.makeText(getApplicationContext(),R.string.complete_move,Toast.LENGTH_SHORT).show();
+//                        new Handler().postDelayed(new Runnable() {// 1 초 후에 실행
+//                            @Override
+//                            public void run() {
+//                                // 실행할 동작 코딩
+//
+//                                finish();
+//                            }
+//                        }, 1000);
                     }
                     mAdapter.getTempImagePathList().clear();
                 }
@@ -481,7 +492,7 @@ public class PicMainActivity extends BaseActivity {
                     ArrayList<String> tempShare = new ArrayList<String>();
                     for (Integer imagePath : mAdapter.getTempImagePathList()) {
                         mAdapter.getRealImagePathList().set(imagePath, gh.TRASHPATH);
-                        Log.i("integer", String.valueOf(imagePath));
+//                        Log.i("integer", String.valueOf(imagePath));
 
                         tempShare.add(mAdapter.getOriginImagePathList().get(imagePath));
 
@@ -796,14 +807,14 @@ public class PicMainActivity extends BaseActivity {
             File moveFile = new File(movePath);
             if (!imagePath.equals(movePath)) {
 
-                Log.i("ohdoking", imagePath + " -> " + movePath + "/" + orginFile.getName());
+//                Log.i("ohdoking", imagePath + " -> " + movePath + "/" + orginFile.getName());
 
                 if (!imagePath.equals(movePath + "/" + orginFile.getName())) {
                     gh.fileUMove(imagePath, movePath + "/" + orginFile.getName());
                 }
 
             } else {
-                Log.i("ohdoking", "same");
+//                Log.i("ohdoking", "same");
             }
 
 //                    gh.fileUMove(imagePath,imagePath+"/"+f.getName());

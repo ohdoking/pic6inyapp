@@ -22,7 +22,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
     //Camera camera;
 
     @Override
-    public void onReceive (Context context, Intent intent) { // 10ÃÊ ³»¿¡ ¼öÇàµÇ¾î¾ß ÇÔ
+    public void onReceive (Context context, Intent intent) { // 10ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ ï¿½ï¿½
         gh = new GalleryHelper(context);
         boolean temp = isRunningProcess(context, "");
         ArrayList<String> newPictureArray = gh.newPicture();
@@ -36,7 +36,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         }
         String oldPicture = getPreferences(context);
 //        isActivity()
-        Log.i(TAG, "ohdoking" + temp+"//"+String.valueOf(isEmptyNewPic)+"//"+oldPicture+"//"+newPicture);
+//        Log.i(TAG, "ohdoking" + temp+"//"+String.valueOf(isEmptyNewPic)+"//"+oldPicture+"//"+newPicture);
         if (!temp
                 && !isEmptyNewPic
                 && !isActivity(context,DialogMainActivity.class)
@@ -54,21 +54,21 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         }
 //        Toast.makeText(context, "" + temp, Toast.LENGTH_LONG).show();
         /*try {
-        // ¼ö½ÅµÇ¸é È£Ãâ
+        // ï¿½ï¿½ï¿½ÅµÇ¸ï¿½ È£ï¿½ï¿½
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             cameraIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pi = PendingIntent.getActivity(context, 0, cameraIntent, PendingIntent.FLAG_ONE_SHOT);
-            Toast.makeText(context, "Ä«¸Þ¶ó »ç¿ë ¾Æ´Ô", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            Toast.makeText(context, "Ä«¸Þ¶ó »ç¿ë Áß", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½", Toast.LENGTH_SHORT).show();
         }*//*
         try {
             camera.open();
-            Log.i(TAG, "Ä«¸Þ¶ó ¿ÀÇÂ ½Ãµµ");
-            Toast.makeText(context, "Ä«¸Þ¶ó »ç¿ë ¾Æ´Ô", Toast.LENGTH_SHORT).show();
+            Log.i(TAG, "Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ãµï¿½");
+            Toast.makeText(context, "Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            Log.i(TAG, "Ä«¸Þ¶ó ¿ÀÇÂ ½Ãµµ ½ÇÆÐ");
-            Toast.makeText(context, "Ä«¸Þ¶ó »ç¿ë Áß", Toast.LENGTH_SHORT).show();
+            Log.i(TAG, "Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ãµï¿½ ï¿½ï¿½ï¿½ï¿½");
+            Toast.makeText(context, "Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½", Toast.LENGTH_SHORT).show();
         }
         */
     }
@@ -82,12 +82,12 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         List<ActivityManager.RunningAppProcessInfo> list = actMng.getRunningAppProcesses();
         ArrayList<String> cameraLists = new ArrayList<String>();
 
-        cameraLists.add("camera");// ±âº»
-        cameraLists.add("media");// ¹Ìµð¾î
+        cameraLists.add("camera");// ï¿½âº»
+        cameraLists.add("media");// ï¿½Ìµï¿½ï¿½
         cameraLists.add("b612");//b612
-        cameraLists.add("gpulumera");//Äµµð Ä«¸Þ¶ó
-        cameraLists.add("SilentCamera");//Á¶¿ëÇÑ Ä«¸Þ¶ó
-        cameraLists.add("Camera360");//360 Ä«¸Þ¶ó
+        cameraLists.add("gpulumera");//Äµï¿½ï¿½ Ä«ï¿½Þ¶ï¿½
+        cameraLists.add("SilentCamera");//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½Þ¶ï¿½
+        cameraLists.add("Camera360");//360 Ä«ï¿½Þ¶ï¿½
         cameraLists.add("photowonder");//photowonder
         cameraLists.add("retrica");//retrica
         cameraLists.add("selfiecamera");//selfiecamera
@@ -130,7 +130,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         editor.commit();
     }
 
-    // °ª ºÒ·¯¿À±â
+    // ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½
     private String getPreferences(Context ctx) {
         SharedPreferences pref = ctx.getSharedPreferences("pref", ctx.MODE_PRIVATE);
         return pref.getString("oldPicture", "");

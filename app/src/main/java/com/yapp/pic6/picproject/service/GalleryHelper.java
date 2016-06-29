@@ -88,11 +88,11 @@ public class GalleryHelper {
                 // Get the field values
                 data = mImageCursor.getString(dataColumn);
                 // Do something with the values.
-                Log.i("ListingImages", " _data=" + data);
-                Log.i("new_old_Images",
-                        " mody=" + mImageCursor.getString(mImageCursor.getColumnIndex(android.provider.MediaStore.Images.ImageColumns.DATE_MODIFIED))
-                                +" // add=" + mImageCursor.getString(mImageCursor.getColumnIndex(MediaStore.Images.ImageColumns.DATE_ADDED))
-                );
+//                Log.i("ListingImages", " _data=" + data);
+//                Log.i("new_old_Images",
+//                        " mody=" + mImageCursor.getString(mImageCursor.getColumnIndex(android.provider.MediaStore.Images.ImageColumns.DATE_MODIFIED))
+//                                +" // add=" + mImageCursor.getString(mImageCursor.getColumnIndex(MediaStore.Images.ImageColumns.DATE_ADDED))
+//                );
 
                 File f = new File(data);
 
@@ -172,7 +172,7 @@ public class GalleryHelper {
         Cursor cur = context.getContentResolver().query(
                 images, PROJECTION_BUCKET, BUCKET_GROUP_BY, null, BUCKET_ORDER_BY);
 
-        Log.i("ListingImages", " query count=" + cur.getCount());
+//        Log.i("ListingImages", " query count=" + cur.getCount());
         ArrayList<Gallery> arr = new ArrayList<Gallery>();
         if (cur.moveToFirst()) {
             String bucket;
@@ -198,9 +198,9 @@ public class GalleryHelper {
                 gallery.setName(bucket);
                 gallery.setImagePath( file.getParent());
                 // Do something with the values.
-                Log.i("ListingImages", " bucket=" + bucket
-                        + "  date_taken=" + date
-                        + "  _data=" + data);
+//                Log.i("ListingImages", " bucket=" + bucket
+//                        + "  date_taken=" + date
+//                        + "  _data=" + data);
 
                 if(!gallery.getName().equals("Trash")){
                     arr.add(gallery);
@@ -222,8 +222,8 @@ public class GalleryHelper {
 
         File sourceLocation = new File(inFileName);
         File targetLocation = new File(outFileName);
-        Log.i("ohdokingi", inFileName);
-        Log.i("ohdokingo", outFileName);
+//        Log.i("ohdokingi", inFileName);
+//        Log.i("ohdokingo", outFileName);
         try {
             if (sourceLocation.renameTo(targetLocation)) {
 
@@ -238,7 +238,7 @@ public class GalleryHelper {
 
             } else {
 
-                Log.i("ohdoking", "fail");
+//                Log.i("ohdoking", "fail");
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -272,7 +272,7 @@ public class GalleryHelper {
         {
             dir.mkdirs();
 
-            Bitmap bm = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
+            Bitmap bm = BitmapFactory.decodeResource(context.getResources(), R.mipmap.logo);
 
 
             File file = new File(STRSAVEPATH + dir_path, "myApp.PNG");
@@ -305,7 +305,7 @@ public class GalleryHelper {
         Cursor cursor = context.getContentResolver().query(uri, filePathColumn, null, null, null);
         cursor.moveToFirst();
         int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        Log.i("ohdoking",String.valueOf(cursor.getString(columnIndex)));
+//        Log.i("ohdoking",String.valueOf(cursor.getString(columnIndex)));
         return cursor.getString(columnIndex);
     }
 
@@ -337,7 +337,7 @@ public class GalleryHelper {
          String fileName = f.getName();
 
         fileUMove((inFileName), (TRASHPATH + fileName));
-        Log.i("ss",inFileName+"//"+TRASHPATH+fileName);
+//        Log.i("ss",inFileName+"//"+TRASHPATH+fileName);
 //        Toast.makeText(context, "Move Trash", Toast.LENGTH_SHORT).show();
     }
 

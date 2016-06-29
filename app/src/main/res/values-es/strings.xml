@@ -68,5 +68,7 @@
     <string name="pth">Taeho Park</string>
     <string name="odk">Dokeun Oh</string>
 
+    <string name="complete_move">complete photo move!</string>
+
 
 </resources>

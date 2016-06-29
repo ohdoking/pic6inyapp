@@ -2,13 +2,18 @@ package com.yapp.pic6.picproject.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
@@ -23,139 +28,157 @@ import com.yapp.pic6.picproject.service.GalleryHelper;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
-	ArrayList<Gallery> gallerys;
-	GalleryHelper gh;
+public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
+    ArrayList<Gallery> gallerys;
+    GalleryHelper gh;
 
-	Context context;
+    Context context;
 
-	Integer currentPosition;
+    Integer currentPosition;
 
-	//원래 기본
-	ArrayList<String> originPath;
-	//이동 되는 번호
-	ArrayList<Integer> tempPath;
-	//이동된 경로
-	ArrayList<String> movePath;
+    //원래 기본
+    ArrayList<String> originPath;
+    //이동 되는 번호
+    ArrayList<Integer> tempPath;
+    //이동된 경로
+    ArrayList<String> movePath;
 
-	ArrayList<Integer> arraySelect;
+    ArrayList<Integer> arraySelect;
 
-	ArrayList<Integer> selectedItem;
+    ArrayList<Integer> selectedItem;
 
-	TextView imageText;
-	ImageView foreImg;
+    TextView imageText;
+    ImageView foreImg;
 
-	public CardAdapter(Context context, ArrayList<Gallery> galleries) {
-		super();
-		this.context = context;
-		originPath = new ArrayList<String>();
-		tempPath = new ArrayList<Integer>();
-		movePath = new ArrayList<String>();
-		arraySelect = new ArrayList<Integer>();
-		selectedItem = new ArrayList<Integer>();
-		gh = new GalleryHelper(context);
-		this.gallerys = galleries;
+    //
 
-	}
+    public float wrapYdown;
+    LinearLayout wrap;
+    Timer timer;
+    public int count = 0;
+    static final int PER_DISTANCE = 10; //1ms마다 이동시킬 Y값
+    boolean swipeMode = false; //true면 swipe 실행 중
 
-	@Override
-	public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-		View v = LayoutInflater.from(viewGroup.getContext())
-		.inflate(R.layout.cardview_layout, viewGroup, false);
-		ViewHolder viewHolder = new ViewHolder(v);
-		return viewHolder;
-	}
+    public CardAdapter(Context context, ArrayList<Gallery> galleries) {
+        super();
+        this.context = context;
+        originPath = new ArrayList<String>();
+        tempPath = new ArrayList<Integer>();
+        movePath = new ArrayList<String>();
+        arraySelect = new ArrayList<Integer>();
+        selectedItem = new ArrayList<Integer>();
+        gh = new GalleryHelper(context);
+        this.gallerys = galleries;
 
-	public void setArray(ArrayList<String> list){
-		originPath = list;
-		movePath.addAll(list);
-	}
-	/*
-		temp image path list
-			set
-			get
-			remove
-			clear
-	 */
-	public void setAllTempImagePath(ArrayList<Integer> str){
-		tempPath.addAll(str);
-	}
-	public void setTempImagePath(Integer str){
-		tempPath.add(str);
-	}
-	public ArrayList<Integer> getTempImagePathList(){
-		return tempPath;
-	}
-	public void removeTempImagePath(Integer str){
-		tempPath.remove(str);
-	}
-	public void cleanTempImagePath(){
-		tempPath.clear();
-	}
+    }
 
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View v = LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.cardview_layout, viewGroup, false);
+        ViewHolder viewHolder = new ViewHolder(v);
+        return viewHolder;
+    }
 
-	public ArrayList<Integer> getSelectedItem(){
-		return selectedItem;
-	}
-	/*
-		temp image path list
-			set
-			setList
-			remove
-			get
-			clear
-	 */
-	public void setRealImagePath(String str){
-		movePath.add(str);
-	}
-	public void setRealImagePathList(ArrayList<String> str){
-		movePath.addAll(str);
-	}
-	public ArrayList<String> getRealImagePathList(){
-		return movePath;
-	}
-	public void removeRealImagePath(String str){
-		movePath.remove(str);
-	}
-	public void cleanRealImagePath(){
-		movePath.clear();
-	}
+    public void setArray(ArrayList<String> list) {
+        originPath = list;
+        movePath.addAll(list);
+    }
+
+    /*
+        temp image path list
+            set
+            get
+            remove
+            clear
+     */
+    public void setAllTempImagePath(ArrayList<Integer> str) {
+        tempPath.addAll(str);
+    }
+
+    public void setTempImagePath(Integer str) {
+        tempPath.add(str);
+    }
+
+    public ArrayList<Integer> getTempImagePathList() {
+        return tempPath;
+    }
+
+    public void removeTempImagePath(Integer str) {
+        tempPath.remove(str);
+    }
+
+    public void cleanTempImagePath() {
+        tempPath.clear();
+    }
 
 
-	public ArrayList<String> getOriginImagePathList(){
-		return originPath;
-	}
+    public ArrayList<Integer> getSelectedItem() {
+        return selectedItem;
+    }
 
-	public ArrayList<Integer> getSelectList(){
-		return arraySelect;
-	}
+    /*
+        temp image path list
+            set
+            setList
+            remove
+            get
+            clear
+     */
+    public void setRealImagePath(String str) {
+        movePath.add(str);
+    }
+
+    public void setRealImagePathList(ArrayList<String> str) {
+        movePath.addAll(str);
+    }
+
+    public ArrayList<String> getRealImagePathList() {
+        return movePath;
+    }
+
+    public void removeRealImagePath(String str) {
+        movePath.remove(str);
+    }
+
+    public void cleanRealImagePath() {
+        movePath.clear();
+    }
 
 
-	public String getPath(ViewHolder viewHolder,int i){
-		return viewHolder.currentItem.getImagePath();
-	}
+    public ArrayList<String> getOriginImagePathList() {
+        return originPath;
+    }
 
-	public boolean checkChangeAll(){
-
-		for(int i = 0; i < originPath.size()  ; i ++){
-			if(originPath.get(i).equals(movePath.get(i))){
-				return false;
-			}
-		}
-		return true;
-	}
+    public ArrayList<Integer> getSelectList() {
+        return arraySelect;
+    }
 
 
+    public String getPath(ViewHolder viewHolder, int i) {
+        return viewHolder.currentItem.getImagePath();
+    }
+
+    public boolean checkChangeAll() {
+
+        for (int i = 0; i < originPath.size(); i++) {
+            if (originPath.get(i).equals(movePath.get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 
-
-	@Override
-	public void onBindViewHolder(ViewHolder viewHolder, int i) {
-		Gallery gallery = gallerys.get(i);
-		currentPosition = i;
-		viewHolder.tvMovie.setText(gallery.getName());
-		viewHolder.currentItem = gallery;
+    @Override
+    public void onBindViewHolder(ViewHolder viewHolder, int i) {
+        Gallery gallery = gallerys.get(i);
+        currentPosition = i;
+        viewHolder.tvMovie.setText(gallery.getName());
+        viewHolder.currentItem = gallery;
 //		Bitmap resized = null;
 //
 //		BitmapFactory.Options options = new BitmapFactory.Options();
@@ -167,142 +190,186 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
 //		}
 
 
-
-
 //		viewHolder.imgThumbnail.setImageBitmap(bitmapImage);
 //		viewHolder.imgThumbnail.setImageBitmap(resized);
-	}
+    }
 
-	@Override
-	public int getItemCount() {
-		return gallerys.size();
-	}
+    @Override
+    public int getItemCount() {
+        return gallerys.size();
+    }
 
-	class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
 
-		public ImageView imgThumbnail;
-		public TextView tvMovie;
+        public ImageView imgThumbnail;
+        public TextView tvMovie;
 
-		public View view;
-		public Gallery currentItem;
+        public View view;
+        public Gallery currentItem;
 
-		public ArrayList<String> imgPaths;
-
-
-
-			public ViewHolder(final View itemView) {
-			super(itemView);
-			imgThumbnail = (ImageView)itemView.findViewById(R.id.img_thumbnail);
+        public ArrayList<String> imgPaths;
 
 
-			tvMovie = (TextView)itemView.findViewById(R.id.tv_movie);
-
-			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-			lp.setMargins(0, 0, 0, 30);
-			itemView.setLayoutParams(lp);
-
-			itemView.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					imgPaths = movePath;
-
-					LinearLayout r = (LinearLayout) ((ViewGroup) itemView.getParent()).getParent();
-					HorizontalScrollView h = (HorizontalScrollView)r.getChildAt(2);
-					LinearLayout l1 = (LinearLayout)h.getChildAt(0);
-
-					FrameLayout f3= (FrameLayout)r.getChildAt(1);
-					TextView tvCount = (TextView)f3.getChildAt(2);
-
-					LinearLayout l3= (LinearLayout)r.getChildAt(3);
-					FrameLayout f4 = (FrameLayout)l3.getChildAt(0);
-
-					CheckBox allPhotoCb = (CheckBox)f4.getChildAt(0);
-					allPhotoCb.setChecked(false);
-					tvCount.setText(originPath.size() + " " + r.getResources().getString(R.string.main_select_of, 0));
+        public ViewHolder(final View itemView) {
+            super(itemView);
+            imgThumbnail = (ImageView) itemView.findViewById(R.id.img_thumbnail);
 
 
-					//FrameLayout f1 = (FrameLayout)l1.getChildAt(0);
-					Animation anim_bigtosmall = AnimationUtils.loadAnimation(context, R.anim.anim_bigtosmall);
-					//비었을때
-					if(tempPath.isEmpty()){
+            tvMovie = (TextView) itemView.findViewById(R.id.tv_movie);
+
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            lp.setMargins(0, 0, 0, 30);
+            itemView.setLayoutParams(lp);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    imgPaths = movePath;
+
+                    LinearLayout r = (LinearLayout) ((ViewGroup) itemView.getParent()).getParent();
+                    HorizontalScrollView h = (HorizontalScrollView) r.getChildAt(2);
+                    LinearLayout l1 = (LinearLayout) h.getChildAt(0);
+
+                    FrameLayout f3 = (FrameLayout) r.getChildAt(1);
+                    TextView tvCount = (TextView) f3.getChildAt(2);
+
+                    LinearLayout l3 = (LinearLayout) r.getChildAt(3);
+                    FrameLayout f4 = (FrameLayout) l3.getChildAt(0);
+
+                    CheckBox allPhotoCb = (CheckBox) f4.getChildAt(0);
+                    allPhotoCb.setChecked(false);
+                    tvCount.setText(originPath.size() + " " + r.getResources().getString(R.string.main_select_of, 0));
+
+
+                    //FrameLayout f1 = (FrameLayout)l1.getChildAt(0);
+                    Animation anim_bigtosmall = AnimationUtils.loadAnimation(context, R.anim.anim_bigtosmall);
+                    //비었을때
+                    if (tempPath.isEmpty()) {
 //						Toast.makeText(itemView.getContext(),currentItem.getImagePath() +" - NONE",Toast.LENGTH_SHORT).show();
-						Toast.makeText(itemView.getContext(),R.string.main_please_select,Toast.LENGTH_SHORT).show();
-					}
-					else{
+                        Toast.makeText(itemView.getContext(), R.string.main_please_select, Toast.LENGTH_SHORT).show();
+                    } else {
 
-						File f = new File(currentItem.getImagePath());
-						String fileName = f.getName();
+                        File f = new File(currentItem.getImagePath());
+                        String fileName = f.getName();
 
-						File f2 = new File(imgPaths.get(0).toString());
-						String fileName2 = f2.getName();
+                        File f2 = new File(imgPaths.get(0).toString());
+                        String fileName2 = f2.getName();
 
-						imgThumbnail.startAnimation(anim_bigtosmall); // folder icon animation
+                        imgThumbnail.startAnimation(anim_bigtosmall); // folder icon animation
 
-						Animation anim_imgdown = AnimationUtils.loadAnimation(context, R.anim.anim_imgdown);
+                        Animation anim_imgdown = AnimationUtils.loadAnimation(context, R.anim.anim_imgdown);
 
-						for(int i = 0; i < tempPath.size(); i++) { // select image animation
-							FrameLayout f1 = (FrameLayout) l1.getChildAt(tempPath.get(i));
-							f1.startAnimation(anim_imgdown);
+                        for (int i = 0; i < tempPath.size(); i++) { // select image animation
+                            FrameLayout f1 = (FrameLayout) l1.getChildAt(tempPath.get(i));
+                            f1.startAnimation(anim_imgdown);
 
-							imageText = (TextView) f1.getChildAt(2);
-							imageText.setText(fileName);
-							foreImg = (ImageView)f1.getChildAt(1);
-							foreImg.setImageResource(0);
+                            imageText = (TextView) f1.getChildAt(2);
+                            imageText.setText(fileName);
+                            foreImg = (ImageView) f1.getChildAt(1);
+                            foreImg.setImageResource(0);
 
-							ImageView img99 =(ImageView)f1.getChildAt(0);
-							img99.getDrawable().setAlpha(50);
+                            ImageView img99 = (ImageView) f1.getChildAt(0);
+                            img99.getDrawable().setAlpha(50);
 
-							selectedItem.set(i,0);
-
+                            selectedItem.set(i, 0);
 
 
-						}
+                        }
 //						Toast.makeText(itemView.getContext(), "'" + fileName2 + "' 에서 '" + fileName + "'로 이동 되었습니다.", Toast.LENGTH_SHORT).show();
 //						Toast.makeText(itemView.getContext(), tempPath.size() + " 장의 사진이 '" + fileName + "'로 이동 되었습니다 ", Toast.LENGTH_SHORT).show();
-						Toast.makeText(itemView.getContext(), tempPath.size() + " "+ itemView.getResources().getString(R.string.main_moved,fileName), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(itemView.getContext(), tempPath.size() + " " + itemView.getResources().getString(R.string.main_moved, fileName), Toast.LENGTH_SHORT).show();
 
 
-
-						for(Integer imagePath :tempPath){
-							movePath.set(imagePath, currentItem.getImagePath());
-							Log.i("integer", String.valueOf(imagePath));
+                        for (Integer imagePath : tempPath) {
+                            movePath.set(imagePath, currentItem.getImagePath());
+//                            Log.i("integer", String.valueOf(imagePath));
 //
 
 
 //							Drawable d = context.getResources().getDrawable(R.mipmap.ic_addfolder);
 //							img.setBackground(d);
-						}
+                        }
 
-						for(String str : originPath){
-							Log.i("origin", str);
-						}
-						for(String str : movePath){
-							Log.i("move",str);
-						}
-						for(int j = 0 ;j < arraySelect.size();j++){
-							arraySelect.set(j,0);
-						}
+                        for (String str : originPath) {
+//                            Log.i("origin", str);
+                        }
+                        for (String str : movePath) {
+//                            Log.i("move", str);
+                        }
+                        for (int j = 0; j < arraySelect.size(); j++) {
 //						Log.i("ohohoh",String.valueOf(checkChangeAll()));
-							if(tempPath.size() == originPath.size() || checkChangeAll() ){
-								((Activity)context).finish();
-							}
-						tempPath.clear();
-					}
+                            arraySelect.set(j, 0);
+                        }
+                        if (tempPath.size() == originPath.size() || checkChangeAll()) {
+//								((Activity)context).finish();
+                            closeAndSave();
+
+                        }
+                        tempPath.clear();
+                    }
 
 
+                }
+            });
 
+        }
+    }
 
+    void closeAndSave() {
+        ArrayList<String> moveList = getRealImagePathList();
+        ArrayList<String> originList = getOriginImagePathList();
+        for (int i = 0; i < moveList.size(); i++) {
+//                    String s = gh.STRSAVEPATH+"/a/myApp.PNG";
+            String imagePath = originList.get(i).toString();
+            String movePath = moveList.get(i).toString();
+            File orginFile = new File(imagePath);
+            File moveFile = new File(movePath);
+            if (!imagePath.equals(movePath)) {
 
+//                Log.i("ohdoking", imagePath + " -> " + movePath + "/" + orginFile.getName());
 
+                if (!imagePath.equals(movePath + "/" + orginFile.getName())) {
+                    gh.fileUMove(imagePath, movePath + "/" + orginFile.getName());
+                }
 
+            } else {
+//                Log.i("ohdoking", "same");
+            }
 
-
-				}
-			});
-
-		}
-	}
-
+//                    gh.fileUMove(imagePath,imagePath+"/"+f.getName());
+        }
+        finishAnim ();
+    }
+    //내려가는애
+    public void finishAnim () {
+        // pop down
+        final Display displayWrap = ((WindowManager) context.getSystemService(context.WINDOW_SERVICE)).getDefaultDisplay();
+        wrap = (LinearLayout)((Activity)context).getWindow().getDecorView().findViewById(R.id.wrap);
+        if (!swipeMode) {
+            swipeMode = true;
+            timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    count++;
+                    ((Activity)context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (wrap.getY() <= displayWrap.getHeight()) {
+                                wrapYdown = wrap.getY();
+                                wrap.setY(wrapYdown + PER_DISTANCE);
+                            } else {
+                                count = 0;
+                                timer.cancel();
+                                swipeMode = false;
+                                ((Activity)context).finish();
+                            }
+                        }
+                    });
+                }
+            }, 0, 1);
+        }
+    }
 
 
 }

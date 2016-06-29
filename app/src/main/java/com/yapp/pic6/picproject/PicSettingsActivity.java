@@ -136,7 +136,7 @@ public class PicSettingsActivity extends PreferenceActivity {
             public boolean onPreferenceChange(Preference preference, Object value) {
                 String stringValue = value.toString();
 
-                Log.i("value1", stringValue);
+//                Log.i("value1", stringValue);
                 // For list preferences, look up the correct display value in
                 // the preference's 'entries' list.
                 if (((SwitchPreference) preference).isChecked()) {
@@ -144,13 +144,13 @@ public class PicSettingsActivity extends PreferenceActivity {
                     stopService(new Intent(preference.getContext(), FifthService.class));
                     Toast.makeText(preference.getContext(),
                             "OFF", Toast.LENGTH_LONG).show();
-                    Log.i("value2", "OFF");
+//                    Log.i("value2", "OFF");
                 } else {
                     savePreferences(preference.getContext(), "ON");
                     startService(new Intent(preference.getContext(), FifthService.class));
                     Toast.makeText(preference.getContext(),
                             "ON", Toast.LENGTH_LONG).show();
-                    Log.i("value2", "ON");
+//                    Log.i("value2", "ON");
                 }
 
                 return true;
@@ -236,17 +236,17 @@ public class PicSettingsActivity extends PreferenceActivity {
         public boolean onPreferenceChange(Preference preference, Object value) {
             String stringValue = value.toString();
 
-            Log.i("value1", stringValue);
+//            Log.i("value1", stringValue);
             // For list preferences, look up the correct display value in
             // the preference's 'entries' list.
             if (((SwitchPreference) preference).isChecked()) {
                 savePreferences(preference.getContext(), "ON");
 
-                Log.i("value1", "ON");
+//                Log.i("value1", "ON");
             } else {
                 savePreferences(preference.getContext(), "OFF");
 
-                Log.i("value1", "OFF");
+//                Log.i("value1", "OFF");
             }
 
             return true;
