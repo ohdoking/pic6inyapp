@@ -12,18 +12,19 @@ public class DeviceBootReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        this.context = context;
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
             /* Setting the alarm here */
-            if(getPreferences().isEmpty() || getPreferences().equals("ON")){
+            if(getPreferences(context).isEmpty() || getPreferences(context).equals("ON")){
                 context.startService(new Intent(context, FifthService.class));
             }
 
         }
-        this.context = context;
+
     }
 
     //      �� �ҷ�����
-    private String getPreferences() {
+    private String getPreferences(Context context) {
         SharedPreferences pref = context.getSharedPreferences("pref", Context.MODE_PRIVATE);
         return pref.getString("popup", "");
     }

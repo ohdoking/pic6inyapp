@@ -118,8 +118,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_gravity="left|center_vertical"
-                    android:text="@string/main_select_all"
-                    android:textColor="#363636" />
+                     />
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:layout_marginLeft="36dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/main_select_all"
+                android:textColor="#363636"
+                android:layout_gravity="left|center_vertical"
+                />
 
                 <Button
                     android:id="@+id/btn_add_folder"

@@ -6,7 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 
 public class PhotoViewActivity extends Activity {
 
@@ -16,7 +16,11 @@ public class PhotoViewActivity extends Activity {
         setContentView(R.layout.activity_photo_view);
 
 
-        RelativeLayout rl = (RelativeLayout)findViewById(R.id.bigPhoto);
+//        LinearLayout ll = (LinearLayout) findViewById(R.id.linearlayout);
+//        ll.setAlpha(0.2f);
+
+
+        ImageView rl = (ImageView)findViewById(R.id.bigPhoto);
         Bitmap bitmap = (Bitmap)getIntent().getParcelableExtra("event_name");
         Drawable d = new BitmapDrawable(getResources(), bitmap);
 

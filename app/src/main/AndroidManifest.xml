@@ -78,7 +78,8 @@
             android:theme="@style/MainTheme"></activity>
         <activity
             android:name=".PhotoViewActivity"
-            android:label="@string/title_activity_photo_view"></activity>
+            android:label="@string/title_activity_photo_view"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
         <activity
             android:name=".TutorialActivity2"
             android:label="@string/title_activity_tutorial2"
