@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PicProject</string>
+    <string name="app_name">Pic</string>
     <string name="title_activity_dialog_test">DialogMainActivity</string>
     <string name="title_activity_dialog_main">DialogMainActivity</string>
 
@@ -12,17 +12,18 @@
     <string name="title_activity_developer_info">DeveloperInfoActivity</string>
 
 
-<!--    <string name="new_album">새앨범 추가</string>
 
-    <string name="ok">확인</string>
-    <string name="cancel">취소</string>
-    <string name="create_folder_content"> 앨범이 생성 되었습니다.</string>
-    <string name="already_exist">이미 해당 이름의 앨범이 존재합니다.</string>
-    <string name="close_order">한 번 더 누르시면 종료됩니다.</string>
+    <!--    <string name="new_album">새앨범 추가</string>
 
-    <string name="newfolder">앨범 추가</string>-->
+        <string name="ok">확인</string>
+        <string name="cancel">취소</string>
+        <string name="create_folder_content"> 앨범이 생성 되었습니다.</string>
+        <string name="already_exist">이미 해당 이름의 앨범이 존재합니다.</string>
+        <string name="close_order">한 번 더 누르시면 종료됩니다.</string>
+
+        <string name="newfolder">앨범 추가</string>-->
     <string name="title_activity_finish_test">FinishTestActivity</string>
-    <string name="title_activity_pic_main">PicMainActivity</string>
+    <string name="title_activity_pic_main">Pic</string>
     <string name="title_activity_photo_view">PhotoViewActivity</string>
 
 

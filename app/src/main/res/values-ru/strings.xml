@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PicProject</string>
+    <string name="app_name">Pic</string>
     <string name="title_activity_dialog_test">DialogMainActivity</string>
     <string name="title_activity_dialog_main">DialogMainActivity</string>
 
@@ -22,7 +22,7 @@
 
     <string name="newfolder">앨범 추가</string>-->
     <string name="title_activity_finish_test">FinishTestActivity</string>
-    <string name="title_activity_pic_main">PicMainActivity</string>
+    <string name="title_activity_pic_main">Pic</string>
     <string name="title_activity_photo_view">PhotoViewActivity</string>
 
 

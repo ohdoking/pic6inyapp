@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PicProject</string>
+    <string name="app_name">Pic</string>
     <string name="title_activity_dialog_test">DialogMainActivity</string>
     <string name="title_activity_dialog_main">DialogMainActivity</string>
 
@@ -11,6 +11,10 @@
     <string name="title_activity_tutorial">TutorialActivity</string>
     <string name="title_activity_developer_info">DeveloperInfoActivity</string>
 
+
+    <string name="title_activity_finish_test">FinishTestActivity</string>
+    <string name="title_activity_pic_main">Pic</string>
+    <string name="title_activity_photo_view">PhotoViewActivity</string>
 
     <!--국제 화를 위한 네이밍-->
     <string name="trash">Trash</string>
