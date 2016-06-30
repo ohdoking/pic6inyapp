@@ -82,7 +82,6 @@ public class PicMainActivity extends BaseActivity {
     ArrayList<Gallery> items;
 
 
-
     LinearLayout wrap;
     Timer timer;
     public int count = 0;
@@ -114,7 +113,7 @@ public class PicMainActivity extends BaseActivity {
         FIRST_ACTIVITY_Y = dpToPixel(200);
 
         final Display displayWrap = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
-        wrap = (LinearLayout)findViewById(R.id.wrap);
+        wrap = (LinearLayout) findViewById(R.id.wrap);
         wrap.setY(displayWrap.getHeight());
 
         // pop up
@@ -191,7 +190,6 @@ public class PicMainActivity extends BaseActivity {
         imageText = new TextView[newPictureList.size()];
 
 
-
 //        tvCount.setText(String.valueOf(newPictureList.size()) + "장의 사진 중 " + String.valueOf(newPictureList.size()) + "장 선택");
         tvCount.setText(newPictureList.size() + " " + getResources().getString(R.string.main_select_of, newPictureList.size()));
 //        tvCount.setText(newPictureList.size() + " " + getResources().getString(R.string.main_select_of, mAdapter.getTempImagePathList().size()));
@@ -208,7 +206,7 @@ public class PicMainActivity extends BaseActivity {
 
 
             frameLayout[i].setLayoutParams(lpf);
-            frameLayout[i].setPadding(0,0,80,0);
+            frameLayout[i].setPadding(0, 0, 80, 0);
 //
 
             imageView[i] = new ImageView(this);
@@ -266,8 +264,6 @@ public class PicMainActivity extends BaseActivity {
                     allPhotoCb.setChecked(false);
 
 
-
-
 //                    Log.i("ohdokingLog",mAdapter.getSelectedItem().get(index).toString() + " : " + imageText[index].getText().toString());
 
                     if (arraySelect.get(index) == 0) {//&& !arrayList.contains(index)) {
@@ -287,16 +283,14 @@ public class PicMainActivity extends BaseActivity {
                         arrayList.remove(String.valueOf(index));
 //                        arraySelect.remove(index);
                     }
-                    if(mAdapter.getSelectedItem().get(index) == 1 && !imageText[index].getText().equals("")){
+                    if (mAdapter.getSelectedItem().get(index) == 1 && !imageText[index].getText().equals("")) {
 //                        Log.i("ohdokingLog", "change!!!!");
                         imageView[index].getDrawable().setAlpha(50);
                         mAdapter.getSelectedItem().set(index, 0);
-                    }
-                    else if(mAdapter.getSelectedItem().get(index) == 1){
+                    } else if (mAdapter.getSelectedItem().get(index) == 1) {
 //                        Log.i("ohdokingLog","wait change!!!!");
                         mAdapter.getSelectedItem().set(index, 0);
-                    }
-                    else{
+                    } else {
 //                        Log.i("ohdokingLog","no change!!!!");
                         mAdapter.getSelectedItem().set(index, 1);
                     }
@@ -372,7 +366,7 @@ public class PicMainActivity extends BaseActivity {
         layout = (LinearLayout) findViewById(R.id.layout);
         scrollView = (HorizontalScrollView) findViewById(R.id.horizontalScrollView);
 
-        arrowImg = (ImageView)findViewById(R.id.arrowImg);
+        arrowImg = (ImageView) findViewById(R.id.arrowImg);
     }
 
     public void clickevent() {
@@ -456,7 +450,7 @@ public class PicMainActivity extends BaseActivity {
                         arraySelect.set(j, 0);
                     }
 
-                    if(mAdapter.getTempImagePathList().size() == mAdapter.getOriginImagePathList().size() || mAdapter.checkChangeAll() ){
+                    if (mAdapter.getTempImagePathList().size() == mAdapter.getOriginImagePathList().size() || mAdapter.checkChangeAll()) {
 //                        finish();
                         closeAndSave();
 //                        Toast.makeText(getApplicationContext(),R.string.complete_move,Toast.LENGTH_SHORT).show();
@@ -471,7 +465,7 @@ public class PicMainActivity extends BaseActivity {
                     }
                     mAdapter.getTempImagePathList().clear();
                 }
-                for(int i = 0 ; i < mAdapter.getSelectedItem().size();i++){
+                for (int i = 0; i < mAdapter.getSelectedItem().size(); i++) {
 
 //                    if(mAdapter.getSelectedItem().get(i) == 1){
                     imageView[i].getDrawable().setAlpha(50);
@@ -612,7 +606,6 @@ public class PicMainActivity extends BaseActivity {
                 }
 
 
-
             }
         });
 
@@ -641,10 +634,6 @@ public class PicMainActivity extends BaseActivity {
                 } else {
                     return;
                 }
-
-
-
-
 
 
             }
@@ -758,6 +747,7 @@ public class PicMainActivity extends BaseActivity {
         }
         return super.onTouchEvent(event);
     }
+
     public Bitmap getRoundedCornerBitmap(Bitmap bitmap) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
                 bitmap.getHeight(), Bitmap.Config.ARGB_8888);
@@ -819,18 +809,20 @@ public class PicMainActivity extends BaseActivity {
 
 //                    gh.fileUMove(imagePath,imagePath+"/"+f.getName());
         }
-        finishAnim ();
+        finishAnim();
     }
+
     //dp 를 pixel로 변환
-    float dpToPixel (float dp) {
+    float dpToPixel(float dp) {
         pixel = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
         return pixel;
     }
+
     //내려가는애
-    public void finishAnim () {
+    public void finishAnim() {
         // pop down
         final Display displayWrap = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
-        wrap = (LinearLayout)findViewById(R.id.wrap);
+        wrap = (LinearLayout) findViewById(R.id.wrap);
         if (!swipeMode) {
             swipeMode = true;
             timer = new Timer();

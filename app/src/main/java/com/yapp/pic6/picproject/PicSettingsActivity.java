@@ -117,6 +117,8 @@ public class PicSettingsActivity extends PreferenceActivity {
         //첫방문 체크
         if(getPreferences().isEmpty()){
             startService(new Intent(this, FifthService.class));
+            Intent i = new Intent(PicSettingsActivity.this, TutorialActivity.class);
+            startActivity(i);
             /*Toast.makeText(this,
                     "NewOn", Toast.LENGTH_LONG).show();*/
 //            saveNewVisit(this,"1");

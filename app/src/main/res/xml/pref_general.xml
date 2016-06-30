@@ -22,7 +22,7 @@
             <intent
                 android:action="android.intent.action.VIEW"
                 android:targetPackage="com.yapp.pic6.picproject"
-                android:targetClass="com.yapp.pic6.picproject.TutorialActivity2" />
+                android:targetClass="com.yapp.pic6.picproject.TutorialActivity" />
         </PreferenceScreen>
 
         <Preference
