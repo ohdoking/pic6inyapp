@@ -93,6 +93,11 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         cameraLists.add("selfiecamera");//selfiecamera
         cameraLists.add("aiemra");//aiemra
         cameraLists.add("cyworld");//cyworld
+        cameraLists.add("kakao");//cyworld
+        cameraLists.add("facebook");//cyworld
+        cameraLists.add("line");//cyworld
+        cameraLists.add("chrome");//cyworld
+        cameraLists.add("naver");//cyworld
 
         ActivityManager.RunningAppProcessInfo rap = list.get(0);
 //        for(ActivityManager.RunningAppProcessInfo rap : list)
